@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "micro-cors": "^0.1.1",
     "mongodb": "^6.12.0",
     "next": "15.1.4",
     "react": "^19.0.0",
