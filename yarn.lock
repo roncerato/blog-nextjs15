@@ -649,6 +649,11 @@
     "@typescript-eslint/types" "8.20.0"
     eslint-visitor-keys "^4.2.0"
 
+"@webdeveducation/next-verify-stripe@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@webdeveducation/next-verify-stripe/-/next-verify-stripe-1.0.1.tgz#4d4d47cb16051da216b905e43b4314e469f7a898"
+  integrity sha512-iVvDQ1un0T86nl6Tfei4IXAWj35PF0gXo/XH5VCSHetqYOTT3U/2cTCYi2p7+B2TK6vO9Pqvo7sVaVmLJBgR+g==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
