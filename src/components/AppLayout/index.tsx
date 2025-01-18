@@ -1,6 +1,7 @@
 import { headers } from "next/headers"
 import { AppLayoutProps } from "./AppLayout.props"
 import { SidebarFooter } from "../SidebarFooter"
+import { SidebarHeader } from "../SidebarHeader"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
     const headerList = await headers()
@@ -11,11 +12,7 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
             {
                 !isRoot &&
                 <aside className="flex flex-col text-white overflow-hidden">
-                    <header className="bg-slate-800">
-                        <div>Logo</div>
-                        <div>cta button</div>
-                        <div>tokens</div>
-                    </header>
+                    <SidebarHeader/>
                     <main className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800">
                         list of post
                     </main>
