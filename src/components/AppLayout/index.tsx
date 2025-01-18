@@ -1,5 +1,6 @@
 import { headers } from "next/headers"
 import { AppLayoutProps } from "./AppLayout.props"
+import { SidebarFooter } from "../SidebarFooter"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
     const headerList = await headers()
@@ -18,9 +19,7 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
                     <main className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800">
                         list of post
                     </main>
-                    <footer className="bg-cyan-800">
-                        user information - logout button
-                    </footer>
+                    <SidebarFooter />
                 </aside>
             }
             <div >
