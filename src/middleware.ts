@@ -1,9 +1,25 @@
-import type { NextRequest } from "next/server"
-
-import { auth0 } from "./lib/auth0"
+import { NextRequest, NextResponse } from "next/server";
+import { auth0 } from "@/lib/auth0";
 
 export async function middleware(request: NextRequest) {
-    return await auth0.middleware(request)
+    const authRes = await auth0.middleware(request);
+    const session = await auth0.getSession();
+
+    const isRoot = request.nextUrl.pathname === "/";
+    const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
+
+    if (session === null) {
+        if (isRoot || isAuthRoute) {
+            return authRes;
+        }
+        return NextResponse.redirect(new URL("/", request.nextUrl.origin));
+
+    } else {
+        if (isRoot) {
+            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+        }
+    }
+    return authRes
 }
 
 export const config = {
