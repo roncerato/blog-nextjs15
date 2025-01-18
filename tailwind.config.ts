@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        body: ["var(--font-dm-sans)", "sans"],
+        heading: ["var(--font-dm-serif)", "serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
