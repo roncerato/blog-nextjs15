@@ -1,3 +1,4 @@
+import { AppLayout } from "../components/AppLayout";
 import "./globals.scss";
 
 
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <AppLayout>
+          {children}
+        </AppLayout>
       </body>
     </html>
   );
