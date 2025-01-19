@@ -1,5 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import clientPromise from "@/lib/mongodb";
+import { IDBPosts, IDBUser } from "@/types/db";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from 'next/server';
 
@@ -8,7 +9,7 @@ export async function POST(req: Request) {
 
   const client = await clientPromise
   const db = client.db("BlogStandart");
-  const userProfile = await db.collection("users").findOne(
+  const userProfile = await db.collection<IDBUser>("users").findOne(
     { 
       auth0Id: session?.user?.sub 
     }
@@ -54,7 +55,7 @@ export async function POST(req: Request) {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const post = await db.collection("posts").insertOne({
+  const post = await db.collection<IDBPosts>("posts").insertOne({
     title: parsed.title,
     postContent: parsed.postContent,
     metaDescription: parsed.metaDescription,
