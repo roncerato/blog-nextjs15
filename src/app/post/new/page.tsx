@@ -18,11 +18,10 @@ export default function NewPost() {
         })
         const json = await response.json()
         alert("Post generated successfully")
-        // setPostContent(JSON.stringify(json))
-        // console.log(json)
-        const formatedJSON = json.slice(json.indexOf("{"), json.indexOf("}") + 1)
-        console.log(formatedJSON)
-        setPostContent(JSON.parse(formatedJSON))
+
+        setPostContent(json)
+        console.log(json)
+
     }
     return (
         <div>
@@ -30,25 +29,28 @@ export default function NewPost() {
                 <div>
                     <label>
                         <strong>
-                        Generate a blog post on the topic of:
+                            Generate a blog post on the topic of:
                         </strong>
                     </label>
-                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={e => setTopic(e.target.value)}/>                    
+                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={e => setTopic(e.target.value)} />
                 </div>
                 <div>
                     <label>
                         <strong>
-                        Targeting the following keywords:
+                            Targeting the following keywords:
                         </strong>
                     </label>
-                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={e => setKeywords(e.target.value)}/>                    
+                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={e => setKeywords(e.target.value)} />
                 </div>
-                
+
                 <button type="submit" className="btn">
                     Generate Post
                 </button>
             </form>
-            <div className="max-w-screen-sm p-10" dangerouslySetInnerHTML={{ __html: JSON.stringify(postContent!) }} />
+            <div className="max-w-screen-sm p-10">
+                <div dangerouslySetInnerHTML={{ __html: postContent.title}} />
+                <div dangerouslySetInnerHTML={{ __html: postContent.postContent }} />
+            </div>
         </div>
     );
 }

@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     `;
 
   const result = await model.generateContent(prompt);
-
-  return NextResponse.json(result.response.text());
+  const responseText = result.response.text()
+  const parsed = JSON.parse(responseText.slice(responseText.indexOf("{"), responseText.lastIndexOf("}") + 1))
+  return NextResponse.json(parsed);
 }
