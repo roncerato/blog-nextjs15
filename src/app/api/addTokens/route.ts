@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "@/lib/auth0";
 import clientPromise from "@/lib/mongodb";
 import { IDBUser } from "@/types/db";
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, ) {
     const session = await auth0.getSession()
     const user = session?.user
     const client = await clientPromise;
