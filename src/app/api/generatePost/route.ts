@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINIAI_API_KEY || "");
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-1.5-flash",
     generationConfig: {
       temperature: 1.7
     }
