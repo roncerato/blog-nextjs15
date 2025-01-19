@@ -1,16 +1,12 @@
 "use client"
 
+import { useRouter } from "next/navigation" 
 import { useState } from "react"
 
-interface PostContent {
-    title: string
-    postContent: string
-}
-
 export default function NewPost() {
-    const [postContent, setPostContent] = useState<PostContent | undefined>()
     const [topic, setTopic] = useState<string>("Top 10 tips for dog owners")
     const [keywords, setKeywords] = useState<string>("first-time dog owners, common dog health issues, best dog breeds")
+    const router = useRouter();
 
     const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -24,9 +20,10 @@ export default function NewPost() {
         const json = await response.json()
         alert("Post generated successfully")
 
-        setPostContent(json)
         console.log(json)
-
+        if(json.postId){
+            router.push(`/post/${json.postId}`)
+        }
     }
     return (
         <div>
@@ -52,15 +49,6 @@ export default function NewPost() {
                     Generate Post
                 </button>
             </form>
-            <div className="max-w-screen-sm p-10">
-                {
-                    postContent &&
-                    <>
-                        <div dangerouslySetInnerHTML={{ __html: postContent!.title }} />
-                        <div dangerouslySetInnerHTML={{ __html: postContent!.postContent }} />
-                    </>
-                }
-            </div>
         </div>
     );
 }
