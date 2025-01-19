@@ -22,7 +22,7 @@ export default async function Post({ params }: {params: Promise<{ postId: string
         redirect("/post/new");
       }
     return (
-        <div className="overflow-auto h-full">
+        <div className="overflow-auto h-full post-body">
         <div className="max-w-screen-sm mx-auto">
   
           <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
