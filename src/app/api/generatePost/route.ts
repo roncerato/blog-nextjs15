@@ -54,7 +54,6 @@ export async function POST(req: Request) {
     }
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const post = await db.collection<IDBPosts>("posts").insertOne({
     title: parsed.title,
     postContent: parsed.postContent,
@@ -65,6 +64,5 @@ export async function POST(req: Request) {
     createdAt: new Date()
   })
 
-
-  return NextResponse.json(parsed);
+  return NextResponse.json({postId: post.insertedId});
 }
