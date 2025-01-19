@@ -2,8 +2,13 @@
 
 import { useState } from "react"
 
+interface PostContent {
+    title: string
+    postContent: string
+}
+
 export default function NewPost() {
-    const [postContent, setPostContent] = useState<string | JSON | null>(null)
+    const [postContent, setPostContent] = useState<PostContent | undefined>()
     const [topic, setTopic] = useState<string>("Top 10 tips for dog owners")
     const [keywords, setKeywords] = useState<string>("first-time dog owners, common dog health issues, best dog breeds")
 
@@ -48,8 +53,8 @@ export default function NewPost() {
                 </button>
             </form>
             <div className="max-w-screen-sm p-10">
-                <div dangerouslySetInnerHTML={{ __html: postContent.title}} />
-                <div dangerouslySetInnerHTML={{ __html: postContent.postContent }} />
+                <div dangerouslySetInnerHTML={{ __html: postContent!.title}} />
+                <div dangerouslySetInnerHTML={{ __html: postContent!.postContent }} />
             </div>
         </div>
     );
