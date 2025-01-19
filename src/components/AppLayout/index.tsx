@@ -12,16 +12,14 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
             {
                 !isRoot &&
                 <aside className="flex flex-col text-white overflow-hidden">
-                    <SidebarHeader/>
+                    <SidebarHeader />
                     <main className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800">
                         list of post
                     </main>
                     <SidebarFooter />
                 </aside>
             }
-            <div >
-                {children}
-            </div>
+            {children}
         </main>
     )
 }
