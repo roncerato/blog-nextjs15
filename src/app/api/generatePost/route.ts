@@ -1,7 +1,23 @@
+import { auth0 } from "@/lib/auth0";
+import clientPromise from "@/lib/mongodb";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
+  const session = await auth0.getSession();
+
+  const client = await clientPromise
+  const db = client.db("BlogStandart");
+  const userProfile = await db.collection("users").findOne(
+    { 
+      auth0Id: session?.user?.sub 
+    }
+  );
+
+  if (!userProfile?.availableTokens){
+    return NextResponse.redirect("/api/addTokens");
+  }
+
   const genAI = new GoogleGenerativeAI(process.env.GEMINIAI_API_KEY || "");
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
@@ -25,5 +41,29 @@ export async function POST(req: Request) {
   const result = await model.generateContent(prompt);
   const responseText = result.response.text()
   const parsed = JSON.parse(responseText.slice(responseText.indexOf("{"), responseText.lastIndexOf("}") + 1))
+
+  await db.collection("users").updateOne(
+    {
+      auth0Id: session?.user?.sub
+    },
+    {
+      $inc: {
+        availableTokens: -1
+      }
+    }
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const post = await db.collection("posts").insertOne({
+    title: parsed.title,
+    postContent: parsed.postContent,
+    metaDescription: parsed.metaDescription,
+    topic,
+    keywords,
+    userId: userProfile._id,
+    createdAt: new Date()
+  })
+
+
   return NextResponse.json(parsed);
 }
