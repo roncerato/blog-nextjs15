@@ -6,10 +6,10 @@ export default function TokenTopup() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ amount: 100 })
         })
         const json = await response.json()
-       console.log(json)
+        console.log(json)
+        window.location.href = json.session.url;
     }
     return (
         <div>
