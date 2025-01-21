@@ -28,7 +28,7 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
                 !isRoot &&
                 <aside className="flex flex-col text-white overflow-hidden">
                     <SidebarHeader availableTokens={Number(user?.availableTokens)} />
-                    <main className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800">
+                    <main className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800 scrollbar-custom">
                         {posts.map(post => (
                             <a
                                 className={`py-1 border border-white/0 block text-ellipsis overflow-hidden whitespace-nowrap my-1 px-2 bg-white/10 cursor-pointer rounded-sm`}

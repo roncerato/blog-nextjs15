@@ -3,70 +3,107 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+   --background: #ffffff;
+   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+   :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+   }
 }
 
 body {
-  // background-color: var(--background);
+   // background-color: var(--background);
+}
+
+@layer base {
+   a:hover {
+      @apply underline;
+   }
 }
 
 @layer components {
-  .btn {
-    @apply bg-green-500 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block;
-  }
+   .btn {
+      @apply disabled:bg-green-200 disabled:cursor-not-allowed hover:no-underline bg-green-500 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block;
+   }
 }
 
-.post-body{
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading my-6 font-bold
- }
+@layer utilities {
 
- h1 {
-    @apply text-4xl
- }
+   .scrollbar-custom {
 
- h2 {
-    @apply text-3xl
- }
+      &::-webkit-scrollbar {
+         width: 8px;
+         height: 8px;
+      }
 
- h3 {
-    @apply text-2xl
- }
+      &::-webkit-scrollbar-thumb {
+         background-color: #4a858a;
+         // border-radius: 4px;
+      }
 
- h4 {
-    @apply text-xl
- }
+      &::-webkit-scrollbar-track {
+         background: #f1f1f100;
+      }
 
- h5 {
-    @apply text-lg
- }
+      &::-webkit-scrollbar-button {
+         display: none;
+         /* Скрыть стрелки */
+      }
+   }
+}
 
- p {
-    @apply my-2
- }
+.post-body {
 
- ul, ol {
-    @apply my-4
- }
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+      @apply font-heading my-6 font-bold
+   }
 
- ul {
-    list-style-type: disc;
- }
+   h1 {
+      @apply text-4xl
+   }
 
- ol {
-    list-style-type: decimal;
- }
+   h2 {
+      @apply text-3xl
+   }
 
- li {
-    @apply my-2
- }
+   h3 {
+      @apply text-2xl
+   }
+
+   h4 {
+      @apply text-xl
+   }
+
+   h5 {
+      @apply text-lg
+   }
+
+   p {
+      @apply my-2
+   }
+
+   ul, ol {
+      @apply my-4
+   }
+
+   ul {
+      list-style-type: disc;
+   }
+
+   ol {
+      list-style-type: decimal;
+   }
+
+   li {
+      @apply my-2
+   }
 
 }
