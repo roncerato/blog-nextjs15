@@ -9,6 +9,10 @@ export async function middleware(request: NextRequest) {
     const isRoot = request.nextUrl.pathname === "/";
     const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
 
+    if (request.nextUrl.pathname.startsWith("/api")) {
+        return NextResponse.next();
+    }
+
     if (session === null) {
         if (isRoot || isAuthRoute) {
             return authRes;
