@@ -1,7 +1,9 @@
 import { AppLayout } from "../components/AppLayout";
 import "./globals.scss";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
-
+import "@fortawesome/fontawesome-svg-core/styles.css"
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 const dmSans = DM_Sans({
   weight: ['400', '500', '700'],
   subsets: ['latin'],
