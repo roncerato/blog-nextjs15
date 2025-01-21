@@ -10,12 +10,12 @@ export async function POST(req: Request) {
   const client = await clientPromise
   const db = client.db("BlogStandart");
   const userProfile = await db.collection<IDBUser>("users").findOne(
-    { 
-      auth0Id: session?.user?.sub 
+    {
+      auth0Id: session?.user?.sub
     }
   );
 
-  if (!userProfile?.availableTokens){
+  if (!userProfile?.availableTokens) {
     return NextResponse.redirect("/api/addTokens");
   }
 
@@ -26,7 +26,16 @@ export async function POST(req: Request) {
       temperature: 1.7
     }
   });
-  const { topic, keywords } = await req.json();
+  const { topic, keywords } = await req.json() as { topic: string, keywords: string };
+
+  if (!topic || !keywords) {
+    return NextResponse.json({ error: "Topic and keywords are required." }, { status: 422 });
+  }
+
+  if (topic.length > 80 || keywords.length > 80) {
+    return NextResponse.json({ error: "Topic and/or keywords must be less than 80 characters." }, { status: 422 });
+  }
+
   const prompt = `Write a long and detailed SEO-friendly blog post about ${topic}, that targets the following comma-separated keywords: ${keywords}. 
     The content should be formatted in SEO-friendly HTML.
     The response must also include appropriate HTML title and meta description content.
@@ -64,5 +73,5 @@ export async function POST(req: Request) {
     createdAt: new Date()
   })
 
-  return NextResponse.json({postId: post.insertedId});
+  return NextResponse.json({ postId: post.insertedId });
 }
