@@ -3,70 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+   --background: #ffffff;
+   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+   :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+   }
 }
 
 body {
-  // background-color: var(--background);
+   // background-color: var(--background);
+}
+
+@layer base {
+   a:hover {
+      @apply underline;
+   }
 }
 
 @layer components {
-  .btn {
-    @apply bg-green-500 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block;
-  }
+   .btn {
+      @apply hover:no-underline bg-green-500 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block;
+   }
 }
 
-.post-body{
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading my-6 font-bold
- }
+.post-body {
 
- h1 {
-    @apply text-4xl
- }
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+      @apply font-heading my-6 font-bold
+   }
 
- h2 {
-    @apply text-3xl
- }
+   h1 {
+      @apply text-4xl
+   }
 
- h3 {
-    @apply text-2xl
- }
+   h2 {
+      @apply text-3xl
+   }
 
- h4 {
-    @apply text-xl
- }
+   h3 {
+      @apply text-2xl
+   }
 
- h5 {
-    @apply text-lg
- }
+   h4 {
+      @apply text-xl
+   }
 
- p {
-    @apply my-2
- }
+   h5 {
+      @apply text-lg
+   }
 
- ul, ol {
-    @apply my-4
- }
+   p {
+      @apply my-2
+   }
 
- ul {
-    list-style-type: disc;
- }
+   ul, ol {
+      @apply my-4
+   }
 
- ol {
-    list-style-type: decimal;
- }
+   ul {
+      list-style-type: disc;
+   }
 
- li {
-    @apply my-2
- }
+   ol {
+      list-style-type: decimal;
+   }
+
+   li {
+      @apply my-2
+   }
 
 }
