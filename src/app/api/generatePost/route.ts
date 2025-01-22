@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   );
 
   if (!userProfile?.availableTokens) {
-    return NextResponse.redirect("/api/addTokens");
+    return NextResponse.redirect("/token-topup");
   }
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINIAI_API_KEY || "");
