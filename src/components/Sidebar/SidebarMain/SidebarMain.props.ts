@@ -1,4 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+import { IDBPosts } from "@/types/db";
+import { WithId } from "mongodb";
+
 export interface ISidebarMainProps {
+    posts: WithId<IDBPosts>[]
 
 }

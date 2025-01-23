@@ -1,22 +1,6 @@
-import { auth0 } from "@/lib/auth0";
 import { ISidebarMainProps } from "./SidebarMain.props";
-import clientPromise from "@/lib/mongodb";
-import { IDBPosts, IDBUser } from "@/types/db";
 
-export default async function SidebarMain({ }: ISidebarMainProps) {
-    const userSession = await auth0.getSession();
-    const client = await clientPromise;
-    const db = client.db("BlogStandart")
-    const user = await db.collection<IDBUser>("users").findOne({
-        auth0Id: userSession?.user.sub
-    })
-
-    const posts = await db.collection<IDBPosts>("posts")
-        .find({ userId: user?._id })
-        .sort({ created: -1 })
-        .limit(5)
-        .toArray()
-
+export default function SidebarMain({ posts }: ISidebarMainProps) {
 
     return (
         <main className="px-2 flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800 scrollbar-custom">

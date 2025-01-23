@@ -23,7 +23,7 @@ export default async function Sidebar({ }: ISidebarProps) {
     return (
         <aside className="flex flex-col text-white overflow-hidden">
             <SidebarHeader availableTokens={user?.availableTokens} />
-            <SidebarMain />
+            <SidebarMain posts={posts}/>
             <SidebarFooter />
         </aside>
     )
