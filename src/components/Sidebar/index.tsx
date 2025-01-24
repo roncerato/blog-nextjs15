@@ -16,14 +16,14 @@ export default async function Sidebar({ }: ISidebarProps) {
 
     const posts = await db.collection<IDBPosts>("posts")
         .find({ userId: user?._id })
-        .sort({ created: -1 })
+        .sort({ createdAt: -1 })
         .limit(5)
         .toArray()
 
     return (
         <aside className="flex flex-col text-white overflow-hidden">
             <SidebarHeader availableTokens={user?.availableTokens} />
-            <SidebarMain posts={posts}/>
+            <SidebarMain posts={posts} />
             <SidebarFooter />
         </aside>
     )
