@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function SidebarMain({ posts: postsFromSSR }: ISidebarMainProps) {
 
-    const { posts, setPostsFromSSR, getPosts } = usePostsContext()
+    const { posts, setPostsFromSSR, getPosts, noMorePosts } = usePostsContext()
 
     useEffect(() => {
         setPostsFromSSR(postsFromSSR)
@@ -22,13 +22,13 @@ export default function SidebarMain({ posts: postsFromSSR }: ISidebarMainProps) 
                     {post.topic}
                 </Link>
             ))}
-            <button
+            {!noMorePosts && (<button
                 className="block hover:underline text-sm text-slate-400 text-center cursor-pointer mx-auto mt-4"
                 onClick={() => {
                     getPosts({ lastPostDate: posts[posts.length - 1].createdAt })
                 }}>
                 Load more posts
-            </button>
+            </button>)}
         </main>
     )
 }
