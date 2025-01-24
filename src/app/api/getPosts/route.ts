@@ -23,12 +23,12 @@ export async function POST(req: NextRequest) {
             .collection("posts")
             .find({
                 userId: userProfile?._id,
-                createdAt: {"$lt": new Date(lastPostDate) }
+                createdAt: { $lt: new Date(lastPostDate) }
             })
             .limit(5)
-            .sort({ created: -1 })
+            .sort({ createdAt: -1 })
             .toArray()
-            
+
         return NextResponse.json({ posts });
     }
     catch (e: unknown) {
