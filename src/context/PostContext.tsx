@@ -30,9 +30,20 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
             body: JSON.stringify({ lastPostDate })
 
         });
-        const json = await result.json()
+        const json = await result.json() as { posts: WithId<IDBPosts>[] }
         const postsResult = json.posts;
         console.log("Posts RESULT: ", postsResult)
+        setPosts(value => {
+            const newPosts = [...value];
+            postsResult.forEach(post => {
+                const exists = newPosts.find((p) => p._id === post._id)
+                if (!exists) {
+                    newPosts.push(post)
+                }
+
+            });
+            return newPosts
+        })
     }, [])
     return (
         <PostsContext.Provider value={{ posts, setPostsFromSSR, getPosts }}>
