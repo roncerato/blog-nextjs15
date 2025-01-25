@@ -6,8 +6,9 @@ import { createContext, ReactNode, useCallback, useContext, useState } from "rea
 interface IPostsContextProps {
     posts: WithId<IDBPost>[] | []
     setPostsFromSSR: (postsFromSSR: WithId<IDBPost>[] | []) => void
-    getPosts: ({ lastPostDate }: {
+    getPosts: ({ lastPostDate, getNewerPosts }: {
         lastPostDate: Date;
+        getNewerPosts?: boolean
     }) => Promise<void>
     noMorePosts: boolean
 }
@@ -32,13 +33,13 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
             return newPosts
         })
     }, [])
-    const getPosts = useCallback(async ({ lastPostDate }: { lastPostDate: Date }) => {
+    const getPosts = useCallback(async ({ lastPostDate, getNewerPosts = false }: { lastPostDate: Date, getNewerPosts?: boolean }) => {
         const result = await fetch('/api/getPosts', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({ lastPostDate })
+            body: JSON.stringify({ lastPostDate, getNewerPosts })
 
         });
         const json = await result.json() as { posts: WithId<IDBPost>[] }
