@@ -6,13 +6,13 @@ export interface IDBUser {
     availableTokens: number;
 }
 export interface IDBPost {
-    _id?: ObjectId;
+    _id?: ObjectId | string;
     title: string;
     postContent: string;
     metaDescription: string;
     topic: string;
     keywords: string;
     auth0Id?: string;
-    userId: ObjectId;
+    userId: ObjectId | string;
     createdAt: Date;
 }
