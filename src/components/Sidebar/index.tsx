@@ -1,6 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import clientPromise from "@/lib/mongodb";
-import { IDBUser, IDBPosts } from "@/types/db";
+import { IDBUser, IDBPost } from "@/types/db";
 import { ISidebarProps } from "./Sidebar.props";
 import { SidebarFooter } from "./SidebarFooter";
 import { SidebarHeader } from "./SidebarHeader";
@@ -14,7 +14,7 @@ export default async function Sidebar({ }: ISidebarProps) {
         auth0Id: userSession?.user.sub
     })
 
-    const posts = await db.collection<IDBPosts>("posts")
+    const posts = await db.collection<IDBPost>("posts")
         .find({ userId: user?._id })
         .sort({ createdAt: -1 })
         .limit(5)

@@ -1,6 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import clientPromise from "@/lib/mongodb";
-import { IDBPosts, IDBUser } from "@/types/db";
+import { IDBPost, IDBUser } from "@/types/db";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     }
   );
 
-  const post = await db.collection<IDBPosts>("posts").insertOne({
+  const post = await db.collection<IDBPost>("posts").insertOne({
     title: parsed.title,
     postContent: parsed.postContent,
     metaDescription: parsed.metaDescription,

@@ -1,11 +1,11 @@
 "use client"
-import { IDBPosts } from "@/types/db";
+import { IDBPost } from "@/types/db";
 import { WithId } from "mongodb";
 import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 
 interface IPostsContextProps {
-    posts: WithId<IDBPosts>[] | []
-    setPostsFromSSR: (postsFromSSR: WithId<IDBPosts>[] | []) => void
+    posts: WithId<IDBPost>[] | []
+    setPostsFromSSR: (postsFromSSR: WithId<IDBPost>[] | []) => void
     getPosts: ({ lastPostDate }: {
         lastPostDate: Date;
     }) => Promise<void>
@@ -17,9 +17,9 @@ const PostsContext = createContext<IPostsContextProps | undefined>(undefined);
 export default PostsContext;
 
 export const PostsProvider = ({ children }: { children: ReactNode }) => {
-    const [posts, setPosts] = useState<WithId<IDBPosts>[] | []>([])
+    const [posts, setPosts] = useState<WithId<IDBPost>[] | []>([])
     const [noMorePosts, setNoMorePosts] = useState<boolean>(false)
-    const setPostsFromSSR = useCallback((postsFromSSR: WithId<IDBPosts>[] | [] = []) => {
+    const setPostsFromSSR = useCallback((postsFromSSR: WithId<IDBPost>[] | [] = []) => {
         setPosts(value => {
             const newPosts = [...value];
             postsFromSSR.forEach(post => {
@@ -41,7 +41,7 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
             body: JSON.stringify({ lastPostDate })
 
         });
-        const json = await result.json() as { posts: WithId<IDBPosts>[] }
+        const json = await result.json() as { posts: WithId<IDBPost>[] }
         const postsResult = json.posts;
         console.log("Posts RESULT: ", postsResult)
         if (postsResult.length < 5) {

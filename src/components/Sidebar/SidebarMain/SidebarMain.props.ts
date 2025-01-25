@@ -1,7 +1,7 @@
-import { IDBPosts } from "@/types/db";
+import { IDBPost } from "@/types/db";
 import { WithId } from "mongodb";
 
 export interface ISidebarMainProps {
-    posts: WithId<IDBPosts>[]
+    posts: WithId<IDBPost>[]
 
 }

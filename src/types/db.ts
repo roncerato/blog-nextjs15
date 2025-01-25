@@ -5,7 +5,7 @@ export interface IDBUser {
     auth0Id: string;
     availableTokens: number;
 }
-export interface IDBPosts {
+export interface IDBPost {
     _id?: ObjectId;
     title: string;
     postContent: string;
