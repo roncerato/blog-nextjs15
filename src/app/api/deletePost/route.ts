@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "@/lib/auth0";
 import { IDBUser } from "@/types/db";
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 
 export async function POST(req: NextRequest) {
-
     try {
         const session = await auth0.getSession()
         const user = session?.user
-
         const client = await clientPromise;
         const db = client.db("BlogStandart")
         const userProfile = await db.collection<IDBUser>("users").findOne(
@@ -17,24 +16,19 @@ export async function POST(req: NextRequest) {
                 auth0Id: user?.sub
             }
         );
-        const { lastPostDate, getNewerPosts } = await req.json() as { lastPostDate: Date, getNewerPosts: boolean };
 
-        console.log(getNewerPosts)
+        const { postId } = await req.json() as { postId: string };
 
-        const posts = await db
+        await db
             .collection("posts")
-            .find({
+            .deleteOne({
                 userId: userProfile?._id,
-                createdAt: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) }
-            })
-            .limit(getNewerPosts ? 0 : 5)
-            .sort({ createdAt: -1 })
-            .toArray()
+                _id: new ObjectId(postId)
+            });
 
-        return NextResponse.json({ posts });
+        return NextResponse.json({ success: true });
     }
     catch (e: unknown) {
-        console.error(e)
+        console.log("error trying to delete a post: ", e)
     }
-
 }

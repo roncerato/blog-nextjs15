@@ -1,13 +1,14 @@
 "use client"
-import { IDBPosts } from "@/types/db";
+import { IDBPost } from "@/types/db";
 import { WithId } from "mongodb";
 import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 
 interface IPostsContextProps {
-    posts: WithId<IDBPosts>[] | []
-    setPostsFromSSR: (postsFromSSR: WithId<IDBPosts>[] | []) => void
-    getPosts: ({ lastPostDate }: {
+    posts: WithId<IDBPost>[] | []
+    setPostsFromSSR: (postsFromSSR: WithId<IDBPost>[] | []) => void
+    getPosts: ({ lastPostDate, getNewerPosts }: {
         lastPostDate: Date;
+        getNewerPosts?: boolean
     }) => Promise<void>
     noMorePosts: boolean
 }
@@ -17,9 +18,9 @@ const PostsContext = createContext<IPostsContextProps | undefined>(undefined);
 export default PostsContext;
 
 export const PostsProvider = ({ children }: { children: ReactNode }) => {
-    const [posts, setPosts] = useState<WithId<IDBPosts>[] | []>([])
+    const [posts, setPosts] = useState<WithId<IDBPost>[] | []>([])
     const [noMorePosts, setNoMorePosts] = useState<boolean>(false)
-    const setPostsFromSSR = useCallback((postsFromSSR: WithId<IDBPosts>[] | [] = []) => {
+    const setPostsFromSSR = useCallback((postsFromSSR: WithId<IDBPost>[] | [] = []) => {
         setPosts(value => {
             const newPosts = [...value];
             postsFromSSR.forEach(post => {
@@ -32,16 +33,16 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
             return newPosts
         })
     }, [])
-    const getPosts = useCallback(async ({ lastPostDate }: { lastPostDate: Date }) => {
+    const getPosts = useCallback(async ({ lastPostDate, getNewerPosts = false }: { lastPostDate: Date, getNewerPosts?: boolean }) => {
         const result = await fetch('/api/getPosts', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({ lastPostDate })
+            body: JSON.stringify({ lastPostDate, getNewerPosts })
 
         });
-        const json = await result.json() as { posts: WithId<IDBPosts>[] }
+        const json = await result.json() as { posts: WithId<IDBPost>[] }
         const postsResult = json.posts;
         console.log("Posts RESULT: ", postsResult)
         if (postsResult.length < 5) {

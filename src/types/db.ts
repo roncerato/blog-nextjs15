@@ -5,14 +5,14 @@ export interface IDBUser {
     auth0Id: string;
     availableTokens: number;
 }
-export interface IDBPosts {
-    _id?: ObjectId;
+export interface IDBPost {
+    _id?: ObjectId | string;
     title: string;
     postContent: string;
     metaDescription: string;
     topic: string;
     keywords: string;
     auth0Id?: string;
-    userId: ObjectId;
+    userId: ObjectId | string;
     createdAt: Date;
 }
