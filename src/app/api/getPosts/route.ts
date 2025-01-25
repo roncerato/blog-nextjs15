@@ -17,15 +17,17 @@ export async function POST(req: NextRequest) {
                 auth0Id: user?.sub
             }
         );
-        const { lastPostDate } = await req.json() as { lastPostDate: Date };
+        const { lastPostDate, getNewerPosts } = await req.json() as { lastPostDate: Date, getNewerPosts: boolean };
+
+        console.log(getNewerPosts)
 
         const posts = await db
             .collection("posts")
             .find({
                 userId: userProfile?._id,
-                createdAt: { $lt: new Date(lastPostDate) }
+                createdAt: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) }
             })
-            .limit(5)
+            .limit(getNewerPosts ? 0 : 5)
             .sort({ createdAt: -1 })
             .toArray()
 
