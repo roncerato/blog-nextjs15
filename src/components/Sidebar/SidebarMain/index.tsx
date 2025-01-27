@@ -1,7 +1,7 @@
 "use client"
 import { useEffect } from "react";
 import { ISidebarMainProps } from "./SidebarMain.props";
-import { usePostsContext } from "@/context/PostContext";
+import { usePostsContext } from "@/context/PostsContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
