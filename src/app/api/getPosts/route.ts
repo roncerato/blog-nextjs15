@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "@/lib/auth0";
 import { IDBUser } from "@/types/db";
@@ -17,17 +18,15 @@ export async function POST(req: NextRequest) {
                 auth0Id: user?.sub
             }
         );
-        const { lastPostDate, getNewerPosts } = await req.json() as { lastPostDate: Date, getNewerPosts: boolean };
-
-        console.log(getNewerPosts)
+        // const { lastPostDate, getNewerPosts } = await req.json() as { lastPostDate: Date, getNewerPosts: boolean };
 
         const posts = await db
             .collection("posts")
             .find({
                 userId: userProfile?._id,
-                createdAt: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) }
+                // createdAt: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) }
             })
-            .limit(getNewerPosts ? 0 : 5)
+            // .limit(getNewerPosts ? 0 : 5)
             .sort({ createdAt: -1 })
             .toArray()
 
