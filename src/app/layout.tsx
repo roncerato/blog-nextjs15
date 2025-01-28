@@ -4,6 +4,7 @@ import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { PostsProvider } from "@/context/PostsContext";
+import PostProvider from "@/context/PostContext";
 config.autoAddCss = false;
 const dmSans = DM_Sans({
   weight: ['400', '500', '700'],
@@ -25,9 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.variable} ${dmSerifDisplay.variable} font-body`}>
         <PostsProvider>
-          <AppLayout>
-            {children}
-          </AppLayout>
+          <PostProvider>
+            <AppLayout>
+              {children}
+            </AppLayout>
+          </PostProvider>
         </PostsProvider>
       </body>
     </html>
