@@ -14,7 +14,7 @@ export async function getUserData() {
     const posts = await db.collection<IDBPost>("posts")
         .find({ userId: user?._id })
         .sort({ createdAt: -1 })
-        .limit(5)
+        // .limit(5)
         .toArray()
 
     return {

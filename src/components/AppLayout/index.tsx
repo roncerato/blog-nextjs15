@@ -1,6 +1,7 @@
 import { headers } from "next/headers"
 import Sidebar from "../Sidebar"
 import { AppLayoutProps } from "./AppLayout.props"
+import DataProvider from "@/context/DataContext"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
 
@@ -10,11 +11,13 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
 
     return (
         <main className="grid grid-cols-[300px,1fr] h-screen max-h-screen">
-            {
-                !isRoot &&
-                <Sidebar />
-            }
-            {children}
+            <DataProvider>
+                {
+                    !isRoot &&
+                    <Sidebar />
+                }
+                {children}
+            </DataProvider>
         </main>
     )
 }

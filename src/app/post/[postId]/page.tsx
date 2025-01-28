@@ -3,8 +3,8 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 import { IDBUser, IDBPost } from "@/types/db";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default async function Post({ params }: { params: Promise<{ postId: string }> }) {
   const { postId } = await params
@@ -21,6 +21,7 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
   if (!post) {
     redirect("/post/new");
   }
+
   return (
     <div className="overflow-auto h-full post-body">
       <div className="max-w-screen-sm mx-auto">
@@ -33,9 +34,11 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
           <div className="text-blue-600 text-2xl font-bold">{post.title}</div>
           <div className="mt-2">{post.metaDescription}</div>
         </div>
+
         <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
           Keywords
         </div>
+
         <div className="flex flex-wrap pt-2 gap-1">
           {post.keywords.split(",").map((keyword, i) => (
             <div key={i} className="p-2 rounded-full bg-slate-800 text-white flex">
@@ -43,9 +46,11 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
             </div>
           ))}
         </div>
+
         <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
           Blog post
         </div>
+
         <div dangerouslySetInnerHTML={{ __html: post.postContent || "" }} />
 
       </div>

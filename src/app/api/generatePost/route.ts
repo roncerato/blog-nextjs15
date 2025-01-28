@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     }
   );
 
-  const post = await db.collection<IDBPost>("posts").insertOne({
+  const post = await db.collection("posts").insertOne({
     title: parsed.title,
     postContent: parsed.postContent,
     metaDescription: parsed.metaDescription,
@@ -73,5 +73,14 @@ export async function POST(req: NextRequest) {
     createdAt: new Date()
   })
 
-  return NextResponse.json({ postId: post.insertedId });
+  return NextResponse.json<IDBPost>({
+    _id: post.insertedId,
+    title: parsed.title,
+    postContent: parsed.postContent,
+    metaDescription: parsed.metaDescription,
+    topic,
+    keywords,
+    userId: userProfile._id,
+    createdAt: new Date()
+  });
 }
