@@ -1,14 +1,17 @@
 "use client"
 
+import { useDataContext } from "@/context/DataContext"
 import { IDBPost } from "@/types/db"
 import { faBrain } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { WithId } from "mongodb"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function NewPost() {
     const [topic, setTopic] = useState<string>("Top 10 tips for dog owners")
     const [keywords, setKeywords] = useState<string>("first-time dog owners, common dog health issues, best dog breeds")
+    const { setAvailableTokens, setPosts } = useDataContext()
     const router = useRouter();
     const [generating, setGenerating] = useState(false)
     const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
@@ -23,9 +26,11 @@ export default function NewPost() {
                 },
                 body: JSON.stringify({ topic, keywords })
             })
-            const json = await response.json() as IDBPost
+            const json = await response.json() as WithId<IDBPost>
             if (json._id) {
                 router.push(`/post/${json._id}`)
+                setAvailableTokens(prev => prev ? prev - 1 : 0)
+                setPosts(prev => prev ? [json, ...prev] : [json])
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
