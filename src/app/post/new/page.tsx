@@ -1,5 +1,6 @@
 "use client"
 
+import { IDBPost } from "@/types/db"
 import { faBrain } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRouter } from "next/navigation"
@@ -22,9 +23,9 @@ export default function NewPost() {
                 },
                 body: JSON.stringify({ topic, keywords })
             })
-            const json = await response.json()
-            if (json?.postId) {
-                router.push(`/post/${json.postId}`)
+            const json = await response.json() as IDBPost
+            if (json._id) {
+                router.push(`/post/${json._id}`)
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
