@@ -1,32 +1,45 @@
-"use client"
+"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ISidebarMainProps } from "./SidebarMain.props";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import { ObjectId } from "mongodb";
+import { useMemo, useState } from "react";
 
-export default function SidebarMain({ posts }: ISidebarMainProps) {
+export default function SidebarMain({ posts: initialPosts }: ISidebarMainProps) {
+    const [posts, setPosts] = useState(initialPosts);
 
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const router = useRouter();
+    const postId = useMemo(() => {
+        return pathname?.match(/^\/post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;
+    }, [pathname]);
 
-    const postId = pathname?.match(/^\/post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;
+    const handleDelete = async (id: string | ObjectId) => {
+        try {
+            const res = await fetch(`/api/deletePost`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ postId }),
+            });
 
-    const handleDelete = async (postId: string | ObjectId) => {
-        const res = await fetch(`/api/deletePost`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ postId })
-        });
-        const json = await res.json()
-        console.log(json)
-    }
+            if (!res.ok) throw new Error(`Failed to delete post`);
+
+            setPosts(prevPosts => prevPosts.filter(post => post._id !== id));
+            if (postId === id) {
+                router.push("/post/new");
+            }
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        }
+    };
+
     return (
         <main className="px-2 flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800 scrollbar-custom">
             <ul>
-
                 {posts.map(post => (
                     <li
                         key={String(post._id)}
@@ -37,13 +50,12 @@ export default function SidebarMain({ posts }: ISidebarMainProps) {
                             href={`/post/${post._id}`}>
                             {post.topic}
                         </Link>
-                        <button>
-                            <FontAwesomeIcon icon={faRemove} onClick={() => { handleDelete(post._id) }} />
+                        <button onClick={() => handleDelete(post._id)}>
+                            <FontAwesomeIcon icon={faRemove} />
                         </button>
                     </li>
                 ))}
             </ul>
         </main>
-    )
+    );
 }
-
