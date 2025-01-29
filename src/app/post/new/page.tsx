@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useDataContext } from "@/context/DataContext"
@@ -7,7 +6,7 @@ import { faBrain } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { WithId } from "mongodb"
 import { useRouter } from "next/navigation"
-import { use, useState } from "react"
+import { useState } from "react"
 
 export default function NewPost() {
     const templateTopic = "Top 10 tips for dog owners"
@@ -18,7 +17,7 @@ export default function NewPost() {
     const { setAvailableTokens, setPosts } = useDataContext()
     const router = useRouter();
     const [generating, setGenerating] = useState(false)
-    const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setGenerating(true)
         try {
@@ -36,15 +35,15 @@ export default function NewPost() {
                 setAvailableTokens(prev => prev ? prev - 1 : 0)
                 setPosts(prev => prev ? [json, ...prev] : [json])
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
+            console.error("Error generating post:", error);
             setGenerating(false)
         }
     }
     return (
         <div className="h-full overflow-hidden">
             {
-                !!generating && (<div className="text-green-500 flex h-full animate-pulse w-full  items-center justify-center flex-col">
+                generating && (<div className="text-green-500 flex h-full animate-pulse w-full  items-center justify-center flex-col">
                     <FontAwesomeIcon icon={faBrain} className="text-8xl" />
                     <h6>Generating...</h6>
                 </div>)
