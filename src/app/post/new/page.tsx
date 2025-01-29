@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useDataContext } from "@/context/DataContext"
@@ -6,11 +7,14 @@ import { faBrain } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { WithId } from "mongodb"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { use, useState } from "react"
 
 export default function NewPost() {
-    const [topic, setTopic] = useState<string>("Top 10 tips for dog owners")
-    const [keywords, setKeywords] = useState<string>("first-time dog owners, common dog health issues, best dog breeds")
+    const templateTopic = "Top 10 tips for dog owners"
+    const templateKeywords = "first-time dog owners, common dog health issues, best dog breeds"
+    const [topic, setTopic] = useState<string>("")
+    const [keywords, setKeywords] = useState<string>("")
+    const [useTemplate, setUseTemplate] = useState<boolean>(false)
     const { setAvailableTokens, setPosts } = useDataContext()
     const router = useRouter();
     const [generating, setGenerating] = useState(false)
@@ -47,35 +51,88 @@ export default function NewPost() {
             }
             {!generating && (
                 <div className="w-full h-full flex flex-col overflow-auto">
-                    <form onSubmit={handleSubmit} className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 rounded-md shadow-xl border border-slate-200 shadow-slate-200">
-                        <div>
-                            <label>
-                                <strong>
-                                    Generate a blog post on the topic of:
-                                </strong>
-                            </label>
-                            <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={e => setTopic(e.target.value)} maxLength={80} />
+                    <div className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 rounded-md shadow-xl border border-slate-200 shadow-slate-200">
+                        <div className="flex items-center justify-end gap-2">
+                            <span className="text-xs font-bold">
+                                use a template
+                            </span>
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="switcher"
+                                    className="hidden"
+                                    checked={useTemplate}
+                                    onChange={() => {
+                                        setUseTemplate(!useTemplate)
+                                        if(!useTemplate){
+                                            setTopic(templateTopic)
+                                            setKeywords(templateKeywords)
+                                        }
+                                        else{
+                                            setTopic("")
+                                            setKeywords("")
+                                        }
+                                    }}
+                                />
+                                <label
+                                    htmlFor="switcher"
+                                    className={`cursor-pointer w-10 h-6 flex items-center rounded-full p-1 duration-300 ease-in-out ${useTemplate ? 'bg-green-500' : 'bg-gray-300'}`}
+                                >
+                                    <div
+                                        className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out ${useTemplate ? 'translate-x-4' : ''}`}
+                                    />
+                                </label>
+                            </div>
                         </div>
-                        <div>
-                            <label>
-                                <strong>
-                                    Targeting the following keywords:
-                                </strong>
-                            </label>
-                            <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={e => setKeywords(e.target.value)} maxLength={80} />
-                            <small className="block mb-2 ">
-                                Separate keywords with commas. <br />
-                                <i>
-                                    For example: &quot;blogging, writing, content marketing&quot;
-                                </i>
-                            </small>
-                        </div>
-                        <button className="btn" type="submit" disabled={!topic.trim() || !keywords.trim()}>
-                            Generate
-                        </button>
-                    </form>
+                        <form onSubmit={handleSubmit} >
+                            <>
+                                <label>
+                                    <strong>
+                                        Generate a blog post on the topic of:
+                                    </strong>
+                                </label>
+                                <textarea
+                                    className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" 
+                                    value={topic}
+                                    onChange={e => { 
+                                        setUseTemplate(false)
+                                        setTopic(e.target.value) 
+                                    }}
+                                    maxLength={80}
+                                    placeholder={templateTopic} />
+                            </>
+                            <div>
+                                <label>
+                                    <strong>
+                                        Targeting the following keywords:
+                                    </strong>
+                                </label>
+                                <textarea
+                                    className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" 
+                                    value={keywords}
+                                    placeholder={templateKeywords}
+                                    onChange={e => {
+                                        setUseTemplate(false)
+                                        setKeywords(e.target.value)
+                                    }}
+                                    maxLength={80} />
+
+                                <small className="block mb-2 ">
+                                    Separate keywords with commas. <br />
+                                    <i>
+                                        For example: &quot;blogging, writing, content marketing&quot;
+                                    </i>
+                                </small>
+                            </div>
+                            <button className="btn" type="submit" disabled={!topic.trim() || !keywords.trim()}>
+                                Generate
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }
