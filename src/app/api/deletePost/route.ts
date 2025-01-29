@@ -17,13 +17,13 @@ export async function POST(req: NextRequest) {
             }
         );
 
-        const { postId } = await req.json() as { postId: string };
+        const { id } = await req.json() as { id: string };
 
         await db
             .collection("posts")
             .deleteOne({
                 userId: userProfile?._id,
-                _id: new ObjectId(postId)
+                _id: new ObjectId(id)
             });
 
         return NextResponse.json({ success: true });
