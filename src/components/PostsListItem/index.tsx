@@ -39,8 +39,8 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
         <li
             className={`py-1 border border-white/0 flex justify-between gap-2 my-1 px-2 bg-white/10 cursor-pointer rounded-sm ${postId === post._id ? "bg-white/20 border-white" : ""} ${isDelete ? "opacity-50" : ""}`}
         >
-            <Link href={`/post/${post._id}`} className="block w-full">
-                <span className="text-ellipsis overflow-hidden whitespace-nowrap">
+            <Link href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
+                <span>
                     {post.topic}
                 </span>
             </Link>
