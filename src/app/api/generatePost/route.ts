@@ -49,7 +49,9 @@ export async function POST(req: NextRequest) {
     `;
 
   const result = await model.generateContent(prompt);
+  console.log(result)
   const responseText = result.response.text()
+  console.log(responseText)
   const parsed = JSON.parse(responseText.slice(responseText.indexOf("{"), responseText.lastIndexOf("}") + 1))
 
   await db.collection("users").updateOne(
