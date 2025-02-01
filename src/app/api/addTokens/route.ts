@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
         metadata: metadata
     })
 
+    console.log("Checkout session created:", checkoutSession)
+
     return NextResponse.json({
         session: checkoutSession
     });

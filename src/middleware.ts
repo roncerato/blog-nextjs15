@@ -9,6 +9,21 @@ export async function middleware(request: NextRequest) {
     const isRoot = request.nextUrl.pathname === "/";
     const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
 
+    const sessionID = request.nextUrl.searchParams.get("session_id");
+    const isSuccessOrCancel = request.nextUrl.pathname.startsWith("/success") || request.nextUrl.pathname.startsWith("/cancel");
+
+    if (isSuccessOrCancel) {
+        if (!sessionID) {
+            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+        }
+
+        const res = await fetch(`${request.nextUrl.origin}/api/checkPayment?session_id=${sessionID}`);
+
+        if (res.status !== 200) {
+            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+        }
+    }
+
     if (request.nextUrl.pathname.startsWith("/api")) {
         return NextResponse.next();
     }
