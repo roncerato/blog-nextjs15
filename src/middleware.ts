@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "@/lib/auth0";
-import { WithId } from "mongodb";
-import { IDBUser } from "./types/db";
 
 export async function middleware(request: NextRequest) {
     const authRes = await auth0.middleware(request);
@@ -11,26 +9,10 @@ export async function middleware(request: NextRequest) {
     const isRoot = request.nextUrl.pathname === "/";
     const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
 
-    const sessionID = request.nextUrl.searchParams.get("session_id");
     const isSuccessOrCancel = request.nextUrl.pathname.startsWith("/success") || request.nextUrl.pathname.startsWith("/cancel");
 
-    // Посмотреть что с этим кодом не так и почему он не работает корректно
-    const isNewPost = request.nextUrl.pathname.startsWith("/post/new");
-
-    const userData = await fetch(`${request.nextUrl.origin}/api/getUserData`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-
-    });
-    const userProfile = await userData.json() as WithId<IDBUser> | null;
-
-    if (isNewPost && userProfile?.availableTokens === 0) {
-        return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
-    }
-    // ---------------------------------------------
     if (isSuccessOrCancel) {
+        const sessionID = request.nextUrl.searchParams.get("session_id");
         if (!sessionID) {
             return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
         }
