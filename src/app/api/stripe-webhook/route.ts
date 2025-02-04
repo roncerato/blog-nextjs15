@@ -20,7 +20,33 @@ export async function POST(request: Request) {
     }
 
     switch (event.type) {
+        case 'payment_intent.succeeded': {
+            const paymentIntent = event.data.object;
+            const auth0Id = paymentIntent.metadata?.sub;
+            try {
+                const client = await clientPromise;
+                const db = client.db("BlogStandart");
 
+                await db.collection("users").updateOne(
+                    { auth0Id },
+                    {
+                        $inc: { availableTokens: 10 },
+                        $setOnInsert: { auth0Id },
+                    },
+                    { upsert: true }
+                );
+
+                console.log(`Payment succeeded for user: ${auth0Id}`);
+            } catch (dbError) {
+                console.error("Ошибка базы данных:", (dbError as Error).message);
+                return new Response(
+                    JSON.stringify({ error: "Database error" }),
+                    { status: 500 }
+                );
+            }
+
+            break;
+        }
         case 'checkout.session.completed': {
             const checkoutSession = event.data.object;
             const sessionId = checkoutSession.id;
@@ -46,51 +72,6 @@ export async function POST(request: Request) {
             } catch (dbError) {
                 console.error("Ошибка базы данных:", dbError);
                 return new Response(JSON.stringify({ error: "Database error" }), { status: 500 });
-            }
-
-            break;
-        }
-
-        case 'payment_intent.succeeded': {
-            const paymentIntent = event.data.object;
-            const paymentIntentId = paymentIntent.id;
-            const auth0Id = paymentIntent.metadata?.sub;
-
-            try {
-                const client = await clientPromise;
-                const db = client.db("BlogStandart");
-
-
-                const paymentRecord = await db.collection("payments").findOne({ paymentIntentId });
-
-                if (!paymentRecord) {
-                    console.error(`Не найдена запись о сессии для paymentIntentId=${paymentIntentId}`);
-                    return new Response(JSON.stringify({ error: "Session not found" }), { status: 404 });
-                }
-
-                const sessionId = paymentRecord.sessionId;
-
-                await db.collection("payments").updateOne(
-                    { paymentIntentId },
-                    { $set: { status: "succeeded" } }
-                );
-
-                await db.collection("users").updateOne(
-                    { auth0Id },
-                    {
-                        $inc: { availableTokens: 10 },
-                        $setOnInsert: { auth0Id },
-                    },
-                    { upsert: true }
-                );
-
-                console.log(`Payment succeeded: user=${auth0Id}, session=${sessionId}, paymentIntent=${paymentIntentId}`);
-            } catch (dbError) {
-                console.error("Ошибка базы данных:", (dbError as Error).message);
-                return new Response(
-                    JSON.stringify({ error: "Database error" }),
-                    { status: 500 }
-                );
             }
 
             break;
