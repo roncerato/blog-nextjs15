@@ -23,9 +23,17 @@ export async function POST(request: Request) {
         case 'payment_intent.succeeded': {
             const paymentIntent = event.data.object;
             const auth0Id = paymentIntent.metadata?.sub;
+            const sessionId = paymentIntent.id;
+            const status = paymentIntent.status
             try {
                 const client = await clientPromise;
                 const db = client.db("BlogStandart");
+
+                await db.collection("payments").insertOne({
+                    sessionId,
+                    status,
+                    createdAt: new Date(),
+                });
 
                 await db.collection("users").updateOne(
                     { auth0Id },
@@ -38,40 +46,8 @@ export async function POST(request: Request) {
 
                 console.log(`Payment succeeded for user: ${auth0Id}`);
             } catch (dbError) {
-                console.error("Ошибка базы данных:", (dbError as Error).message);
-                return new Response(
-                    JSON.stringify({ error: "Database error" }),
-                    { status: 500 }
-                );
-            }
-
-            break;
-        }
-        case 'checkout.session.completed': {
-            const checkoutSession = event.data.object;
-            const sessionId = checkoutSession.id;
-            const paymentIntentId = checkoutSession.payment_intent;
-
-            if (!paymentIntentId) {
-                console.error("PaymentIntent отсутствует в Checkout Session");
-                return NextResponse.json({ error: "PaymentIntent not found" }, { status: 400 });
-            }
-
-            try {
-                const client = await clientPromise;
-                const db = client.db("BlogStandart");
-
-                await db.collection("payments").insertOne({
-                    sessionId,
-                    paymentIntentId,
-                    status: "pending",
-                    createdAt: new Date(),
-                });
-
-                console.log(`Checkout Session завершена: session=${sessionId}, paymentIntent=${paymentIntentId}`);
-            } catch (dbError) {
-                console.error("Ошибка базы данных:", dbError);
-                return new Response(JSON.stringify({ error: "Database error" }), { status: 500 });
+                console.error("Database error:", (dbError as Error).message);
+                return NextResponse.json({ error: "Database error" }, { status: 500 });
             }
 
             break;
