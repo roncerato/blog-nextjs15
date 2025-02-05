@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     if (!sessionId) {
         return NextResponse.json({ error: "session_id is required" }, { status: 400 });
     }
-    console.log(sessionId)
+
     try {
         const client = await clientPromise;
         const db = client.db("BlogStandart");
@@ -19,8 +19,6 @@ export async function GET(request: NextRequest) {
             sessionId,
             // auth0Id: session?.user?.sub
         });
-
-        console.log(payment)
 
         if (!payment) {
             return NextResponse.json({ error: "Payment not found" }, { status: 404 });
