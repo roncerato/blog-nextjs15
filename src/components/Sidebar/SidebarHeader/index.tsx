@@ -17,7 +17,11 @@ export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) =
     return (
         <header className="bg-slate-800 px-2">
             <Logo />
-            <Link href="/post/new" className="btn">
+            <Link
+                href={!!availableTokens ? "/post/new" : "#"}
+                className={`btn ${!!availableTokens ? "" : "pointer-events-none opacity-50"}`}
+                aria-disabled={!!availableTokens}
+            >
                 New post
             </Link>
             <div>
