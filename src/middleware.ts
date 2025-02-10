@@ -54,7 +54,7 @@ export async function middleware(request: NextRequest) {
         const user = await res.json() as WithId<IProfile> | null;
 
         if (isRoot) {
-            if (user?.availableTokens === 0) {
+            if (!user?.availableTokens) {
                 return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
             }
             else {
@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
             }
         }
 
-        if (isNewPostPage && user?.availableTokens === 0) {
+        if (isNewPostPage && !user?.availableTokens) {
             return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
         }
     }
