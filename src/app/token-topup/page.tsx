@@ -1,8 +1,13 @@
-"use client"
-
 import PricingCard from "@/components/PricingCard"
+import clientPromise from "@/lib/mongodb";
+import { IDBPrice } from "@/types/db";
 
-export default function TokenTopup() {
+export default async function TokenTopup() {
+
+    const client = await clientPromise;
+    const db = client.db("BlogStandart")
+    const prices = await db.collection<IDBPrice>("prices").find().toArray();
+    console.log(prices)
 
     return (
         <div className="h-full overflow-x-hidden grid content-center justify-center gap-6">
@@ -10,14 +15,19 @@ export default function TokenTopup() {
                 Select the appropriate token package
             </h1>
             <div className="flex flex-nowrap overflow-x-auto gap-4 pricing-cards-scrollbar p-4">
-
-                <PricingCard name={"Quick Draft"} price={25} tokens={250} desc={"Запускайте SEO-посты за минуты – идеальный старт для вашего блога."} />
-                <PricingCard name={"SEO Booster"} price={75} tokens={1000} desc={"Регулярное создание текстов для устойчивого роста сайта."} />
-                <PricingCard name={"Content Empire"} price={150} tokens={2200} desc={"Масштабируйте контент-маркетинг с расширенным пакетом возможностей."} />
+                {
+                    prices.map((price) => (
+                        <PricingCard
+                            key={String(price._id)}
+                            name={price.name}
+                            price={price.price}
+                            tokens={price.tokens}
+                            desc={price.description}
+                            priceId={price.priceId}
+                        />
+                    ))
+                }
             </div>
-            {/* <button className="btn w-auto" onClick={handleClick}>
-                Add tokens
-            </button> */}
         </div>
     );
 }
