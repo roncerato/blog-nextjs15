@@ -1,6 +1,7 @@
+"use client"
 import { IPricingCardProps } from "./PricingCard.Props";
 
-export default function PricingCard({ name, price, tokens, desc }: IPricingCardProps) {
+export default function PricingCard({ name, price, tokens, desc, priceId }: IPricingCardProps) {
     const handleClick = async () => {
         const response = await fetch('/api/addTokens', {
             method: 'POST',
