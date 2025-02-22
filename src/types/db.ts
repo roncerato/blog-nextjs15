@@ -16,3 +16,11 @@ export interface IDBPost {
     userId: ObjectId | string;
     createdAt: Date;
 }
+export interface IDBPrice {
+    _id: ObjectId;
+    tokens: number;
+    priceId: string;
+    price: number;
+    name: string;
+    description: string;
+}

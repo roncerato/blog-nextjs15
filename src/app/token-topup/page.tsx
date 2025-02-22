@@ -1,24 +1,32 @@
-"use client"
-export default function TokenTopup() {
-    const handleClick = async () => {
-        const response = await fetch('/api/addTokens', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        const json = await response.json()
-        console.log(json)
-        window.location.href = json.session.url;
-    }
+import PricingCard from "@/components/PricingCard"
+import clientPromise from "@/lib/mongodb";
+import { IDBPrice } from "@/types/db";
+
+export default async function TokenTopup() {
+
+    const client = await clientPromise;
+    const db = client.db("BlogStandart")
+    const prices = await db.collection<IDBPrice>("prices").find().toArray();
+
     return (
-        <div className="h-full flex items-center justify-center flex-col col-span-1 gap-8">
+        <div className="h-full overflow-x-hidden grid content-center justify-center gap-6">
             <h1 className="text-4xl font-bold text-center">
-                Token-Topup Page
+                Select the appropriate token package
             </h1>
-            <button className="btn w-auto" onClick={handleClick}>
-                Add tokens
-            </button>
+            <div className="flex flex-nowrap overflow-x-auto gap-4 pricing-cards-scrollbar p-4">
+                {
+                    prices.map((price) => (
+                        <PricingCard
+                            key={String(price._id)}
+                            name={price.name}
+                            price={price.price}
+                            tokens={price.tokens}
+                            desc={price.description}
+                            priceId={price.priceId}
+                        />
+                    ))
+                }
+            </div>
         </div>
     );
 }
