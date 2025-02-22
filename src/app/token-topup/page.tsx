@@ -7,7 +7,6 @@ export default async function TokenTopup() {
     const client = await clientPromise;
     const db = client.db("BlogStandart")
     const prices = await db.collection<IDBPrice>("prices").find().toArray();
-    console.log(prices)
 
     return (
         <div className="h-full overflow-x-hidden grid content-center justify-center gap-6">
