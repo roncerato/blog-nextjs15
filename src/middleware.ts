@@ -35,6 +35,9 @@ export async function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith("/api")) {
         return NextResponse.next();
     }
+    if (request.nextUrl.pathname.startsWith("/shared-post")) {
+        return NextResponse.next();
+    }
 
     if (session === null) {
         if (isRoot || isAuthRoute) {

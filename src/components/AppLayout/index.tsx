@@ -1,19 +1,18 @@
-import { headers } from "next/headers"
 import Sidebar from "../Sidebar"
 import { AppLayoutProps } from "./AppLayout.props"
 import DataProvider from "@/context/DataContext"
+import { auth0 } from "@/lib/auth0"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
 
-    const headerList = await headers()
-    const path = headerList.get("x-current-path")
-    const isRoot = path === "/"
+    const session = await auth0.getSession()
+    const isSession = session !== null
 
     return (
         <main className="grid grid-cols-[300px,1fr] h-screen max-h-screen">
             <DataProvider>
                 {
-                    !isRoot &&
+                    isSession &&
                     <Sidebar />
                 }
                 {children}
