@@ -8,6 +8,7 @@ export default function PricingCard({ name, price, tokens, desc, priceId }: IPri
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({ priceId })
         })
         const json = await response.json()
         console.log(json)

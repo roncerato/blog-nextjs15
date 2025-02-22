@@ -7,10 +7,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 export async function POST(req: NextRequest) {
     const session = await auth0.getSession()
     const user = session?.user
-
+    const { priceId } = await req.json() as { priceId: string }
     const lineItems = [
         {
-            price: process.env.STRIPE_PRODUCT_PRICE_ID,
+            price: priceId,
             quantity: 1
         }
     ]
