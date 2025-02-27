@@ -70,7 +70,8 @@ export async function POST(req: NextRequest) {
     topic,
     keywords,
     userId: userProfile._id,
-    createdAt: new Date()
+    createdAt: new Date(),
+    isShared: false
   })
 
   return NextResponse.json<IDBPost>({
