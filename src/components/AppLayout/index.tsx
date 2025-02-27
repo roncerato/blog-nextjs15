@@ -9,7 +9,7 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
     const isSession = session !== null
 
     return (
-        <main className="grid grid-cols-[300px,1fr] h-screen max-h-screen">
+        <main className={`grid ${isSession ? "grid-cols-[300px,1fr]" : ''} h-screen max-h-screen`}>
             <DataProvider>
                 {
                     isSession &&

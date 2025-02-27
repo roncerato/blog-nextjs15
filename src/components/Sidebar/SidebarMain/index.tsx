@@ -17,7 +17,7 @@ export default function SidebarMain({ posts: initialPosts }: ISidebarMainProps) 
     }, [pathname]);
 
     return (
-        <main className="px-2 flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800 scrollbar-custom">
+        <main className="px-2 flex-1 bg-gradient-to-b from-slate-800 to-cyan-800 scrollbar-custom">
             <ul>
                 {posts && posts.map(post => (
                     <PostsListItem key={String(post._id)} postId={postId} post={post} />

@@ -15,6 +15,7 @@ export interface IDBPost {
     auth0Id?: string;
     userId: ObjectId | string;
     createdAt: Date;
+    isShared?: boolean;
 }
 export interface IDBPrice {
     _id: ObjectId;
