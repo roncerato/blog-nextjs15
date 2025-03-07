@@ -35,7 +35,7 @@ export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) =
                 <Logo />
                 <Link href="/token-topup" className="flex justify-center gap-1 items-center" title="Top up your tokens">
                     <Token width={20} height={20} />
-                    <h5 className="text-black font-heading font-semibold leading-1 h-7">
+                    <h5 className="text-black font-semibold leading-1">
                         {availableTokens ? availableTokens : 0}
                     </h5>
                 </Link>

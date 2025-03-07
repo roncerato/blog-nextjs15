@@ -50,9 +50,9 @@ export default function NewPost() {
             }
             {!generating && (
                 <div className="w-full h-full flex flex-col overflow-auto">
-                    <div className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 rounded-md shadow-xl border border-slate-200 shadow-slate-200">
+                    <div className="m-auto w-full max-w-screen-sm p-4 rounded-xl">
                         <div className="flex items-center justify-end gap-2">
-                            <span className="text-xs font-bold">
+                            <span className="text-xs font-light ">
                                 use a template
                             </span>
                             <div className="flex items-center">
@@ -63,11 +63,11 @@ export default function NewPost() {
                                     checked={useTemplate}
                                     onChange={() => {
                                         setUseTemplate(!useTemplate)
-                                        if(!useTemplate){
+                                        if (!useTemplate) {
                                             setTopic(templateTopic)
                                             setKeywords(templateKeywords)
                                         }
-                                        else{
+                                        else {
                                             setTopic("")
                                             setKeywords("")
                                         }
@@ -75,7 +75,7 @@ export default function NewPost() {
                                 />
                                 <label
                                     htmlFor="switcher"
-                                    className={`cursor-pointer w-10 h-6 flex items-center rounded-full p-1 duration-300 ease-in-out ${useTemplate ? 'bg-green-500' : 'bg-gray-300'}`}
+                                    className={`cursor-pointer w-10 h-6 flex items-center rounded-full p-1 duration-300 ease-in-out ${useTemplate ? 'bg-[#4A90E2]' : 'bg-gray-300'}`}
                                 >
                                     <div
                                         className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out ${useTemplate ? 'translate-x-4' : ''}`}
@@ -87,28 +87,29 @@ export default function NewPost() {
                             <>
                                 <label>
                                     <strong>
-                                        Generate a blog post on the topic of:
+                                        Topic:
                                     </strong>
                                 </label>
-                                <textarea
-                                    className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" 
+                                <input
+                                    className="resize-none w-full bg-[#F7F7F7] h-min block p-5 rounded-xl mt-2 font-light"
                                     value={topic}
-                                    onChange={e => { 
+                                    onChange={e => {
                                         setUseTemplate(false)
-                                        setTopic(e.target.value) 
+                                        setTopic(e.target.value)
                                     }}
                                     maxLength={80}
                                     placeholder={templateTopic} />
                             </>
                             <div>
                                 <label>
-                                    <strong>
-                                        Targeting the following keywords:
-                                    </strong>
+                                    <h4 className="font-heading font-bold mt-6">
+                                        Keywords:
+                                    </h4>
                                 </label>
                                 <textarea
-                                    className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" 
+                                    className="resize-none bg-[#F7F7F7] p-5 w-full block my-2  rounded-xl font-light"
                                     value={keywords}
+                                    rows={6}
                                     placeholder={templateKeywords}
                                     onChange={e => {
                                         setUseTemplate(false)
@@ -116,15 +117,15 @@ export default function NewPost() {
                                     }}
                                     maxLength={80} />
 
-                                <small className="block mb-2 ">
+                                <small className="block mb-2 mt-4 ml-5">
                                     Separate keywords with commas. <br />
-                                    <i>
+                                    <i className="text-gray-500 mt-1 inline-block mb-2">
                                         For example: &quot;blogging, writing, content marketing&quot;
                                     </i>
                                 </small>
                             </div>
-                            <button className="btn" type="submit" disabled={!topic.trim() || !keywords.trim()}>
-                                Generate
+                            <button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex focus:outline-none  bg-[#4A90E2] font-bold text-base group-hover:bg-white group-hover:text-[#4A90E2]" type="submit" disabled={!topic.trim() || !keywords.trim()}>
+                                GENERATE
                             </button>
                         </form>
                     </div>

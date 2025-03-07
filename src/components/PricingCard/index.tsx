@@ -15,31 +15,31 @@ export default function PricingCard({ name, price, tokens, desc, priceId }: IPri
         window.location.href = json.session.url;
     }
     return (
-        <div className="flex flex-shrink-0 w-[270px] flex-col bg-[#F7F7F7] rounded-3xl ">
+        <div className="group flex flex-shrink-0 w-[270px] flex-col bg-[#F7F7F7] rounded-3xl hover:shadow-lg transition duration-100 hover:bg-[#4A90E2] hover:text-white">
             <div className="px-6 py-8 sm:p-10 sm:pb-6 flex flex-col flex-1">
                 <div className="w-full text-left flex flex-col flex-grow justify-between">
                     <div>
-                        <h2 className="text-lg font-medium tracking-tighter  lg:text-3xl text-[#1A1A1A]">
+                        <h2 className="font-heading text-lg font-semibold tracking-tighter lg:text-3xl">
                             {name}
                         </h2>
-                        <p className="mt-2 text-sm text-[#4D4D4D]">{desc}</p>
+                        <p className="mt-2 text-sm text-[#4D4D4D] group-hover:text-white">{desc}</p>
                     </div>
                     <div className="mt-6">
                         <p>
-                            <span className="text-5xl font-light tracking-tight text-black">
+                            <span className="text-5xl font-light tracking-tight">
                                 {tokens}
                             </span>
-                            <span className="text-base font-medium text-gray-500"> tokens </span>
+                            <span className="text-base font-semibold text-gray-500 group-hover:text-white"> tokens </span>
                         </p>
 
                     </div>
                 </div>
             </div>
             <div className="px-6 pb-8 sm:px-8">
-                <button aria-describedby="tier-company" className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] focus-visible:ring-[#4A90E2] bg-[#4A90E2] font-bold text-base" onClick={handleClick}>
+                <button aria-describedby="tier-company" className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex focus:outline-none  bg-[#4A90E2] font-bold text-base group-hover:bg-white group-hover:text-[#4A90E2]" onClick={handleClick}>
                     ${price}
                 </button>
-                <span className="text-xs block w-full text-gray-500 font-medium mt-3">*one-time purchase </span>
+                <span className="text-xs block w-full text-gray-500 font-medium mt-3 group-hover:text-white">*one-time purchase </span>
             </div>
         </div>
     )

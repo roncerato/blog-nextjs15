@@ -72,13 +72,13 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer font-heading ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
                 <Link href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
                     <span className="text-sm">
                         {post.topic}
                     </span>
                 </Link>
-                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-black/50 hover:text-black/100"}`}>
+                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-black/100"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {

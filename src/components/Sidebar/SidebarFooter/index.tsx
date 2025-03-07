@@ -22,7 +22,7 @@ export const SidebarFooter = async ({ }: SidebarFooterProps) => {
                         </div>
                         <div className="flex-1 overflow-hidden flex justify-between items-center">
                             <div>
-                                <h2 className="font-medium font-heading text-sm overflow-hidden text-ellipsis whitespace-nowrap text-black">
+                                <h2 className="font-medium text-sm overflow-hidden text-ellipsis whitespace-nowrap text-black">
                                     {session.user.given_name} <br />
                                     {session.user.family_name}
                                 </h2>
