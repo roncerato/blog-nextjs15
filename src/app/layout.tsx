@@ -1,21 +1,22 @@
 import { AppLayout } from "../components/AppLayout";
 import "./globals.scss";
-import { DM_Sans, DM_Serif_Display } from "next/font/google";
+import { Raleway, Roboto, } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Metadata } from "next";
 
 config.autoAddCss = false;
-const dmSans = DM_Sans({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  variable: "--font-dm-sans",
-});
-const dmSerifDisplay = DM_Serif_Display({
-  weight: ['400'],
-  subsets: ['latin'],
-  variable: "--font-dm-serif",
-});
+
+const raleway = Raleway({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ['latin', 'cyrillic'],
+  variable: "--font-poppins",
+})
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ['latin', "cyrillic"],
+  variable: "--font-roboto",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${dmSerifDisplay.variable} font-body`}>
+      <body className={`${roboto.variable} ${raleway.variable} font-body`}>
         <AppLayout>
           {children}
         </AppLayout>

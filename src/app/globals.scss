@@ -14,6 +14,12 @@
    }
 }
 
+input:focus-visible,
+textarea:focus-visible {
+   outline: none;
+   border: 1px solid #e5e7eb;
+}
+
 body {
    // background-color: var(--background);
 }
@@ -123,7 +129,7 @@ body {
    }
 
    ol {
-      list-style-type: decimal;
+      // list-style-type: decimal;
    }
 
    li {
