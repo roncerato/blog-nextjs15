@@ -33,11 +33,11 @@ export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) =
             </div>
             <div className="flex justify-between items-center mt-6 mb-4">
                 <Logo />
-                <Link href="/token-topup" className="flex justify-center items-center" title="Top up your tokens">
+                <Link href="/token-topup" className="flex justify-center gap-1 items-center" title="Top up your tokens">
                     <Token width={20} height={20} />
-                    <span className="text-black">
+                    <h5 className="text-black font-heading font-semibold leading-1 h-7">
                         {availableTokens ? availableTokens : 0}
-                    </span>
+                    </h5>
                 </Link>
 
             </div>

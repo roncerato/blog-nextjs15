@@ -9,8 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ["var(--font-dm-sans)", "sans"],
-        heading: ["var(--font-dm-serif)", "serif"],
+        body: ["var(--font-roboto)"],
+        heading: ["var(--font-poppins)"],
       },
       colors: {
         background: "var(--background)",

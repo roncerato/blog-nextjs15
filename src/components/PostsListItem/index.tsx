@@ -72,13 +72,13 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between gap-2 my-1 px-2 bg-white/10 cursor-pointer rounded-sm ${postId === post._id ? "bg-white/20 border-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer font-heading ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
                 <Link href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
-                    <span>
+                    <span className="text-sm">
                         {post.topic}
                     </span>
                 </Link>
-                <button onClick={() => setIsMenuOpened(prev => !prev)} className=" text-white/50 hover:text-white/100 basis-2 flex-initial">
+                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-black/50 hover:text-black/100"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
@@ -111,7 +111,7 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
 
             {
                 isPostShared && isModalOpened === "share" &&
-                <ShareModal link={`http://localhost:3000/post/${post._id}`} setIsModalOpened={setIsModalOpened} />}
+                <ShareModal link={`http://localhost:3000/shared-post/${post._id}`} setIsModalOpened={setIsModalOpened} />}
             {
                 isModalOpened === "delete" &&
                 <DeleteModal setIsModalOpened={setIsModalOpened} deleteFunc={async () => handleDelete(post._id)} />
