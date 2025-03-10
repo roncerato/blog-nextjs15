@@ -1,9 +1,7 @@
 "use client";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SidebarHeaderProps } from "./SidebarHeader.props"
 import Link from "next/link"
-// import { faCoins } from "@fortawesome/free-solid-svg-icons"
-// import Logo from "@/assets/logo.svg"
+import Logo from "@/assets/logo.svg"
 import { useDataContext } from "@/context/DataContext";
 import { useEffect } from "react";
 // import HideSidebar from "@/assets/hideSidebar.svg"
@@ -32,7 +30,7 @@ export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) =
                 </Link>
             </div>
             <div className="flex justify-between items-center mt-6 mb-4">
-                {/* <Logo /> */} +
+                <Logo />
                 <Link href="/token-topup" className="flex justify-center gap-1 items-center" title="Top up your tokens">
                     {/* <Token width={20} height={20} /> */}+
                     <h5 className="text-black font-semibold leading-1">
