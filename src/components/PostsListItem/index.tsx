@@ -111,7 +111,7 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
 
             {
                 isPostShared && isModalOpened === "share" &&
-                <ShareModal link={`http://localhost:3000/shared-post/${post._id}`} setIsModalOpened={setIsModalOpened} />}
+                <ShareModal id={post._id} setIsModalOpened={setIsModalOpened} />}
             {
                 isModalOpened === "delete" &&
                 <DeleteModal setIsModalOpened={setIsModalOpened} deleteFunc={async () => handleDelete(post._id)} />
