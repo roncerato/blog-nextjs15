@@ -1,7 +1,7 @@
 import { auth0 } from "@/lib/auth0"
 import { SidebarFooterProps } from "./SidebarFooter.props"
 import Image from "next/image"
-// import Logout from "@/assets/logout.svg"
+import { Icons } from "@/assets/Icons"
 export const SidebarFooter = async ({ }: SidebarFooterProps) => {
     const session = await auth0.getSession()
 
@@ -28,7 +28,7 @@ export const SidebarFooter = async ({ }: SidebarFooterProps) => {
                                 </h2>
                             </div>
                             <a href="/auth/logout">
-                                {/* <Logout /> */}
+                                <Icons.Logout width={24} height={24} fill="#ADADAE" />
                             </a>
                         </div>
                     </>
