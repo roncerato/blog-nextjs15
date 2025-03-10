@@ -2,7 +2,6 @@
 
 import { SidebarHeaderProps } from "./SidebarHeader.props"
 import Link from "next/link"
-// import Logo from "@/assets/logo.svg"
 import { useDataContext } from "@/context/DataContext";
 import { useEffect } from "react";
 import { Icons } from "@/assets/Icons";
