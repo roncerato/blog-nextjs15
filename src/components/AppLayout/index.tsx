@@ -1,4 +1,4 @@
-// import Sidebar from "../Sidebar"
+import Sidebar from "../Sidebar"
 import { AppLayoutProps } from "./AppLayout.props"
 import DataProvider from "@/context/DataContext"
 import { auth0 } from "@/lib/auth0"
@@ -12,8 +12,8 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
         <main className={`grid ${isSession ? "grid-cols-[300px,1fr]" : ''} h-screen max-h-screen`}>
             <DataProvider>
                 {
-                    // isSession &&
-                    // <Sidebar />
+                    isSession &&
+                    <Sidebar />
                 }
                 {children}
             </DataProvider>
