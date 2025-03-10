@@ -1,10 +1,13 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import { ShareModalProps } from "./ShareModal.props";
 
-export default function ShareModal({ link = "http://localhost:3000/token-topup", setIsModalOpened }: { link?: string, setIsModalOpened: Dispatch<SetStateAction<false | "share" | "delete">> }) {
+export default function ShareModal({ id, setIsModalOpened }: ShareModalProps) {
     const [copied, setCopied] = useState(false);
-
+    const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
+    const { hostname: host, port } = window.location;
+    const link = `${protocol}${host}${port ? ":" + port : ""}/shared-post/${id}`;
     const copyToClipboard = async () => {
         try {
             await navigator.clipboard.writeText(link);
@@ -25,7 +28,6 @@ export default function ShareModal({ link = "http://localhost:3000/token-topup",
                             <FontAwesomeIcon icon={faClose} color="black" />
                         </button>
                     </div>
-
                     <div className="flex flex-col flex-1 justify-center items-center gap-3 bg-[#F7F7F7]">
                         <div className="my-2">
                             <p className="text-lg text-black">Link to the post</p>
