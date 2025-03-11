@@ -64,7 +64,7 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
 
           <ul className="flex flex-wrap  gap-1 p-4 border-b border-stone-200">
             {post.keywords.split(",").map((keyword, i) => (
-              <li key={i} className="p-2  rounded-full bg-[#4A90E2] text-white flex items-center gap-1 text-sm font-heading font-medium">
+              <li key={i} className="p-2  rounded-full text-black bg-[#F7F7F7] border border-[#e5e7eb] flex items-center gap-1 text-sm font-heading font-medium">
                 <FontAwesomeIcon icon={faHashtag} width={10} /> {keyword}
               </li>
             ))}
