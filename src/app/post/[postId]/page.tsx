@@ -45,36 +45,39 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
   }
 
   return (
-    <div className="overflow-auto h-full post-body">
-      <div className="max-w-screen-sm mx-auto">
+    <div className="px-5 overflow-auto h-full ">
+      <div className="max-w-screen-sm mx-auto mt-6 flex flex-col gap-6">
+        <div>
+          <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
+            SEO title & meta description
+          </h5>
 
-        <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
-          SEO title & meta description
+          <div className="p-4 border-b border-stone-200">
+            <div className="text-[#4A90E2] text-2xl font-bold font-heading">{post.title}</div>
+            <div className="mt-2 text-sm">{post.metaDescription}</div>
+          </div>
         </div>
+        <div>
+          <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md ">
+            Keywords
+          </h5>
 
-        <div className="p-4 my-2 border border-stone-200 rounded-md">
-          <div className="text-blue-600 text-2xl font-bold">{post.title}</div>
-          <div className="mt-2">{post.metaDescription}</div>
+          <ul className="flex flex-wrap  gap-1 p-4 border-b border-stone-200">
+            {post.keywords.split(",").map((keyword, i) => (
+              <li key={i} className="p-2  rounded-full bg-[#4A90E2] text-white flex items-center gap-1 text-sm font-heading font-medium">
+                <FontAwesomeIcon icon={faHashtag} width={10} /> {keyword}
+              </li>
+            ))}
+          </ul>
         </div>
+        <div>
 
-        <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
-          Keywords
+          <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
+            Blog post
+          </h5>
+
+          <div className="post-body" dangerouslySetInnerHTML={{ __html: post.postContent || "" }} />
         </div>
-
-        <div className="flex flex-wrap pt-2 gap-1">
-          {post.keywords.split(",").map((keyword, i) => (
-            <div key={i} className="p-2 rounded-full bg-slate-800 text-white flex">
-              <FontAwesomeIcon icon={faHashtag} width={10} /> {keyword}
-            </div>
-          ))}
-        </div>
-
-        <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
-          Blog post
-        </div>
-
-        <div dangerouslySetInnerHTML={{ __html: post.postContent || "" }} />
-
       </div>
     </div>
   );

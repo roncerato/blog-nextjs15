@@ -25,23 +25,25 @@ export default function ShareModal({ id, setIsModalOpened }: ShareModalProps) {
                 <div className="p-3 w-[400px] bg-[#F7F7F7] rounded-lg flex justify-between flex-col">
                     <div className="flex justify-end">
                         <button onClick={() => setIsModalOpened(false)}>
-                            <FontAwesomeIcon icon={faClose} color="black" />
+                            <FontAwesomeIcon icon={faClose} className="text-[#ADADAE] hover:text-[#6e6e6e]" />
                         </button>
                     </div>
                     <div className="flex flex-col flex-1 justify-center items-center gap-3 bg-[#F7F7F7]">
-                        <div className="my-2">
-                            <p className="text-lg text-black">Link to the post</p>
-                        </div>
-
+                        <h2 className="text-lg font-bold text-black text-center">🔗 Share this post!</h2>
+                        <p className="text-sm text-black text-center">
+                            Copy the link and send it to your friends so they can watch this post too.
+                        </p>
                         <div className="flex gap-2 w-full">
                             <input
+                                disabled
                                 readOnly
+                                onSelect={(e) => e.preventDefault()}
                                 type="text"
-                                className="border px-2 flex-1 bg-[#F7F7F7] text-black rounded-3xl"
+                                className="caret-transparent selection:bg-transparent border text-sm text-[#ADADAE] select-none px-4 flex-1 bg-[#F7F7F7] rounded-3xl"
                                 value={link}
                             />
                             <button
-                                className="flex items-center justify-center px-6 py-2.5 text-center text-white duration-200 border-2 border-[#4A90E2] rounded-full hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] bg-[#4A90E2] font-bold text-base box-content w-20"
+                                className="flex items-center justify-center px-3 py-1.5 text-center text-white duration-200 border-2 border-[#4A90E2] rounded-full hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] bg-[#4A90E2] font-bold text-base box-content w-20"
                                 onClick={copyToClipboard}
                             >
                                 {copied ? "COPIED!" : "COPY"}
