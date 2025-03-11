@@ -28,7 +28,7 @@ export const SidebarFooter = async ({ }: SidebarFooterProps) => {
                                 </h2>
                             </div>
                             <a href="/auth/logout">
-                                <Icons.Logout width={24} height={24} fill="#ADADAE" />
+                                <Icons.Logout width={24} height={24} fill="#ADADAE" className="hover:fill-[#6e6e6e]" />
                             </a>
                         </div>
                     </>

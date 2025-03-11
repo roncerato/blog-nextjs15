@@ -78,7 +78,7 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
                         {post.topic}
                     </span>
                 </Link>
-                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-black/100"}`}>
+                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
