@@ -1,3 +1,4 @@
+import DataProvider from "@/context/DataContext";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function NewPostLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <>
+        <DataProvider>
             {children}
-        </>
+        </DataProvider>
     )
 }
