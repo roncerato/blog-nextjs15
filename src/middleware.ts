@@ -1,12 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "@/lib/auth0";
-import { WithId } from "mongodb";
-
-interface IProfile {
-    _id: string,
-    auth0Id: string,
-    availableTokens: number
-}
 
 export async function middleware(request: NextRequest) {
     const authRes = await auth0.middleware(request);
@@ -47,17 +40,17 @@ export async function middleware(request: NextRequest) {
 
     } else {
 
-        const res = await fetch(`${request.nextUrl.origin}/api/getUserData`, {
+        const res = await fetch(`${request.nextUrl.origin}/api/getTokens`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ session }),
         });
-        const user = await res.json() as WithId<IProfile> | null;
+        const tokens = await res.json() as number | undefined;
 
         if (isRoot) {
-            if (!user?.availableTokens) {
+            if (!tokens) {
                 return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
             }
             else {
@@ -65,7 +58,7 @@ export async function middleware(request: NextRequest) {
             }
         }
 
-        if (isNewPostPage && !user?.availableTokens) {
+        if (isNewPostPage && !tokens) {
             return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
         }
     }
