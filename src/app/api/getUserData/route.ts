@@ -1,20 +1,30 @@
+import { auth0 } from "@/lib/auth0";
 import clientPromise from "@/lib/mongodb";
-import { SessionData } from "@auth0/nextjs-auth0/server";
-import { NextRequest, NextResponse } from "next/server";
+import { IDBPost, IDBUser } from "@/types/db";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function POST() {
 
-    const { session } = await req.json() as { session: SessionData | null };
+    const session = await auth0.getSession()
+    const user = session?.user
 
     try {
         const client = await clientPromise
         const db = client.db("BlogStandart");
-        const userProfile = await db.collection("users").findOne(
+        const profile = await db.collection<IDBUser>("users").findOne(
             {
-                auth0Id: session?.user?.sub
+                auth0Id: user?.sub
             }
         );
-        return NextResponse.json(userProfile);
+        const posts = await db
+            .collection<IDBPost>("posts")
+            .find({
+                userId: profile?._id,
+            })
+            .sort({ createdAt: -1 })
+            .toArray()
+
+        return NextResponse.json({ profile, posts });
     } catch (e: unknown) {
         console.log("error trying to get user data: ", e)
     }
