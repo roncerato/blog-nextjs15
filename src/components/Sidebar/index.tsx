@@ -35,7 +35,7 @@ export default function Sidebar({ }: ISidebarProps) {
     }, []);
 
     return (
-        <aside className="flex flex-col bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] max-h-full">
+        <aside className="flex flex-col bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] max-h-screen">
             <DataProvider>
                 <SidebarHeader availableTokens={availableTokens} />
                 <SidebarMain posts={posts} />
