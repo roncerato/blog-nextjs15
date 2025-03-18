@@ -1,7 +1,4 @@
-import { IDBPost } from "@/types/db";
-import { WithId } from "mongodb";
-
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface ISidebarMainProps {
-    posts: WithId<IDBPost>[]
 
 }

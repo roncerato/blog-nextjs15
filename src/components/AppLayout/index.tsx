@@ -1,6 +1,8 @@
+import DataProvider from "@/context/DataContext"
 import Sidebar from "../Sidebar"
 import { AppLayoutProps } from "./AppLayout.props"
 import { auth0 } from "@/lib/auth0"
+import { MenuProvider } from "@/context/MenuContext"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
 
@@ -8,14 +10,19 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
     const isSession = session !== null
 
     return (
-        <main className={`grid ${isSession ? "grid-cols-[300px,1fr]" : ''} h-screen max-h-screen`}>
-            {
-                isSession &&
-                <Sidebar />
-            }
-            <div>
-                {children}
-            </div>
+        <main className={`flex h-screen max-h-screen`}>
+            <DataProvider>
+                {
+                    isSession && (
+                        <MenuProvider>
+                            <Sidebar />
+                        </MenuProvider>
+                    )
+                }
+                <div className="flex-1">
+                    {children}
+                </div>
+            </DataProvider>
         </main>
     )
 }

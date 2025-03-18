@@ -3,19 +3,22 @@
 import { SidebarHeaderProps } from "./SidebarHeader.props"
 import Link from "next/link"
 import { useDataContext } from "@/context/DataContext";
-import { useEffect } from "react";
 import { Icons } from "@/assets/Icons";
-export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) => {
+import { useMenuContext } from "@/context/MenuContext";
+export const SidebarHeader = ({ }: SidebarHeaderProps) => {
 
-    const { availableTokens, setAvailableTokens } = useDataContext()
-    useEffect(() => {
-        setAvailableTokens(tokens)
-    }, [setAvailableTokens, tokens])
+    const { availableTokens } = useDataContext()
+    const { setIsOpen, isOpen } = useMenuContext()
 
     return (
         <header className="px-4">
             <div className="pt-4 flex justify-between">
-                <Icons.HideSidebar fill="#ADADAE" height={24} width={24} className="hover:fill-[#6e6e6e]" />
+                <button
+                    onClick={() => setIsOpen(prev => !prev)}
+                    className={`${isOpen ? "rotate-0" : "rotate-180"} transition-transform`}
+                >
+                    <Icons.HideSidebar fill="#ADADAE" height={24} width={24} className="hover:fill-[#6e6e6e]" />
+                </button>
 
                 <Link
                     href={!!availableTokens ? "/post/new" : "#"}
