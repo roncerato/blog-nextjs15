@@ -1,26 +1,14 @@
 "use client";
 import { ISidebarMainProps } from "./SidebarMain.props";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useDataContext } from "@/context/DataContext";
 import PostsListItem from "@/components/PostsListItem";
 
 export default function SidebarMain({ }: ISidebarMainProps) {
 
-    const { posts, setPosts } = useDataContext()
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`/api/getPosts`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const data = await res.json();
-            setPosts(data.posts)
-        }
-        fetchData()
-    }, [])
+    const { posts } = useDataContext()
+
     const pathname = usePathname();
     const postId = useMemo(() => {
         return pathname?.match(/^\/post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;

@@ -1,11 +1,11 @@
-
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ISidebarProps } from "./Sidebar.props";
 import { SidebarFooter } from "./SidebarFooter";
 import { SidebarHeader } from "./SidebarHeader";
 import SidebarMain from "./SidebarMain";
-import DataProvider from "@/context/DataContext";
+import { useDataContext } from "@/context/DataContext";
 import { IDBPost, IDBUser } from "@/types/db";
 import { WithId } from "mongodb";
 
@@ -16,9 +16,7 @@ interface IUserData {
 
 export default function Sidebar({ }: ISidebarProps) {
 
-    const [posts, setPosts] = useState<WithId<IDBPost>[] | []>([]);
-    const [availableTokens, setAvailableTokens] = useState<number | undefined>(0);
-
+    const { setPosts, setAvailableTokens } = useDataContext()
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch('/api/getUserData', {
@@ -36,10 +34,8 @@ export default function Sidebar({ }: ISidebarProps) {
 
     return (
         <aside className="flex flex-col bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] max-h-screen">
-            <DataProvider>
-                <SidebarHeader availableTokens={availableTokens} />
-                <SidebarMain posts={posts} />
-            </DataProvider>
+            <SidebarHeader />
+            <SidebarMain />
             <SidebarFooter />
         </aside>
     )

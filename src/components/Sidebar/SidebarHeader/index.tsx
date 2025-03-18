@@ -3,14 +3,11 @@
 import { SidebarHeaderProps } from "./SidebarHeader.props"
 import Link from "next/link"
 import { useDataContext } from "@/context/DataContext";
-import { useEffect } from "react";
 import { Icons } from "@/assets/Icons";
-export const SidebarHeader = ({ availableTokens: tokens }: SidebarHeaderProps) => {
+export const SidebarHeader = ({ }: SidebarHeaderProps) => {
 
-    const { availableTokens, setAvailableTokens } = useDataContext()
-    useEffect(() => {
-        setAvailableTokens(tokens)
-    }, [setAvailableTokens, tokens])
+    const { availableTokens } = useDataContext()
+
 
     return (
         <header className="px-4">
