@@ -45,7 +45,7 @@ export default async function Post({ params }: { params: Promise<{ postId: strin
   }
 
   return (
-    <div className="px-5 overflow-auto h-full ">
+    <div className="px-5 overflow-auto h-full py-10">
       <div className="max-w-screen-sm mx-auto mt-6 flex flex-col gap-6">
         <div>
           <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">

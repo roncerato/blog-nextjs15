@@ -12,7 +12,7 @@ const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
 
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <MenuContext.Provider value={{ isOpen, setIsOpen }}>
