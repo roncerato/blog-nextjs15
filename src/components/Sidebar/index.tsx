@@ -48,18 +48,18 @@ export default function Sidebar({ }: ISidebarProps) {
                     </button>
                     <Link
                         href={!!availableTokens ? "/post/new" : "#"}
-                        className={`flex justify-center items-center ${!!availableTokens ? "cursor-pointer" : "cursor-not-allowed"} h-6 w-6`}
+                        className={`flex justify-center items-center ${!!availableTokens ? "cursor-pointer" : "cursor-not-allowed"} h-6 w-6 `}
                         aria-disabled={!!availableTokens}
                         aria-label="Create a new post"
                         title="Create a new post">
                         <Icons.Plus fill="#ADADAE" height={18} width={18} className="hover:fill-[#6e6e6e]" />
                     </Link>
                 </div>
-                <div className={`col-start-1 col-end-3 row-start-1 row-end-2 justify-self-center`}>
+                <div className={`col-start-1 col-end-3 row-start-1 row-end-2 justify-self-center ${!isOpen ? "opacity-100" : "opacity-0"}`}>
                     <Icons.Logo className="w-20" />
                 </div>
             </div>
-            <aside className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all relative`}>
+            <aside className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full md:relative z-50`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
                     <SidebarHeader />
                     <SidebarMain />
