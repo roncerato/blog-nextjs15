@@ -6,16 +6,16 @@ import { createContext, useContext, useState } from "react";
 
 interface IDataContext {
     availableTokens: number | undefined
-    posts: WithId<IDBPost>[] | [],
+    posts: WithId<IDBPost>[] | [] | undefined,
     setAvailableTokens: React.Dispatch<React.SetStateAction<number | undefined>>,
-    setPosts: React.Dispatch<React.SetStateAction<WithId<IDBPost>[] | []>>
+    setPosts: React.Dispatch<React.SetStateAction<WithId<IDBPost>[] | [] | undefined>>
 }
 
 export const DataContext = createContext<undefined | IDataContext>(undefined)
 
 export default function DataProvider({ children }: { children: React.ReactNode }) {
     const [availableTokens, setAvailableTokens] = useState<number | undefined>(undefined)
-    const [posts, setPosts] = useState<WithId<IDBPost>[] | []>([])
+    const [posts, setPosts] = useState<WithId<IDBPost>[] | [] | undefined>(undefined)
 
     return (
         <DataContext.Provider value={{ availableTokens, posts, setAvailableTokens, setPosts }}>
