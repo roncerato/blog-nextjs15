@@ -22,9 +22,9 @@ export const SidebarFooter = ({ }: SidebarFooterProps) => {
         <footer className="flex items-center gap-2 px-2 py-4">
             {
                 !session && (
-                    <span className="block text-center flex-1">
-                        Loading...
-                    </span>
+                    <div className="flex items-center justify-center flex-1 h-full">
+                        <div className="w-6 h-6 border-2 border-[#ADADAE] border-t-[#4A90E2] rounded-full animate-spin "></div>
+                    </div>
                 )
             }
 
