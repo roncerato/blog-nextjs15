@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useDataContext } from "@/context/DataContext";
 import PostsListItem from "@/components/PostsListItem";
 
-export default function SidebarMain({ }: ISidebarMainProps) {
+export default function SidebarMain({ device }: ISidebarMainProps) {
 
     const { posts } = useDataContext()
 
@@ -34,7 +34,7 @@ export default function SidebarMain({ }: ISidebarMainProps) {
             }
             {posts && (<ul>
                 {posts && posts.map(post => (
-                    <PostsListItem key={String(post._id)} postId={postId} post={post} />
+                    <PostsListItem key={String(post._id)} postId={postId} post={post} device={device} />
                 ))}
             </ul>)}
         </main>

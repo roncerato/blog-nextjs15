@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar"
 import { AppLayoutProps } from "./AppLayout.props"
 import { auth0 } from "@/lib/auth0"
 import { MenuProvider } from "@/context/MenuContext"
+import MobileMenu from "../MobileMenu"
 
 export const AppLayout = async ({ children }: AppLayoutProps) => {
 
@@ -16,6 +17,7 @@ export const AppLayout = async ({ children }: AppLayoutProps) => {
                     isSession && (
                         <MenuProvider>
                             <Sidebar />
+                            <MobileMenu />
                         </MenuProvider>
                     )
                 }

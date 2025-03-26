@@ -1,3 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { Dispatch, SetStateAction } from "react";
 export interface SidebarHeaderProps {
+    isMenuOpened: boolean;
+    setIsMenuOpened: Dispatch<SetStateAction<boolean>>
 }

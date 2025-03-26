@@ -11,10 +11,12 @@ import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import DeleteModal from "../DeleteModal";
 import ShareModal from "../ShareModal";
+import { useMenuContext } from "@/context/MenuContext";
 
-export default function PostsListItem({ postId, post }: IPostsListItemProps): React.JSX.Element {
+export default function PostsListItem({ postId, post, device }: IPostsListItemProps): React.JSX.Element {
     const { setPosts } = useDataContext()
     const router = useRouter();
+    const { setIsMobileOpen } = useMenuContext()
     const [isDelete, setIsDelete] = useState(false);
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const [isPostShared, setIsPostShared] = useState(post.isShared);
@@ -73,7 +75,16 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
         <>
             <li
                 className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
-                <Link href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
+                <Link
+                    onClick={() => {
+                        if (device === "mobile") {
+                            setIsMobileOpen(false)
+                        }
+                        else {
+                            return
+                        }
+                    }}
+                    href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
                     <span className="text-sm">
                         {post.topic}
                     </span>
