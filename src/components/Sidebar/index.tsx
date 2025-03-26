@@ -1,41 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
-import { useEffect } from "react";
 import { ISidebarProps } from "./Sidebar.props";
 import { SidebarFooter } from "./SidebarFooter";
 import { SidebarHeader } from "./SidebarHeader";
 import SidebarMain from "./SidebarMain";
 import { useDataContext } from "@/context/DataContext";
-import { IDBPost, IDBUser } from "@/types/db";
-import { WithId } from "mongodb";
 import { useMenuContext } from "@/context/MenuContext";
 import { Icons } from "@/assets/Icons";
 import Link from "next/link";
 
-interface IUserData {
-    profile: WithId<IDBUser> | null;
-    posts: WithId<IDBPost>[];
-}
 
 export default function Sidebar({ }: ISidebarProps) {
 
-    const { setPosts, setAvailableTokens } = useDataContext()
     const { isOpen, setIsOpen } = useMenuContext()
     const { availableTokens } = useDataContext()
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('/api/getUserData', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-            const data = await res.json() as IUserData
-            setPosts(data.posts)
-            setAvailableTokens(data.profile?.availableTokens)
-        }
-        fetchData()
-    }, []);
 
     return (
         <>
