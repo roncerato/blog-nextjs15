@@ -2,7 +2,7 @@ import { IDBPost } from "@/types/db";
 import { WithId } from "mongodb";
 
 export interface IPostsListItemProps {
-    postId: string | null;
+    selectedPostId: string | null;
     post: WithId<IDBPost>;
     device: "mobile" | "desktop";
 }

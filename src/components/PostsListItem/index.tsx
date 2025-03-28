@@ -13,7 +13,7 @@ import DeleteModal from "../DeleteModal";
 import ShareModal from "../ShareModal";
 import { useMenuContext } from "@/context/MenuContext";
 
-export default function PostsListItem({ postId, post, device }: IPostsListItemProps): React.JSX.Element {
+export default function PostsListItem({ selectedPostId, post, device }: IPostsListItemProps): React.JSX.Element {
     const { setPosts } = useDataContext()
     const router = useRouter();
     const { setIsMobileOpen } = useMenuContext()
@@ -36,7 +36,7 @@ export default function PostsListItem({ postId, post, device }: IPostsListItemPr
             if (!res.ok) throw new Error(`Failed to delete post`);
 
             setPosts(prevPosts => prevPosts!.filter(post => post._id !== id));
-            if (postId === id) {
+            if (selectedPostId === id) {
                 router.push("/post/new");
             }
         } catch (error) {
@@ -74,7 +74,7 @@ export default function PostsListItem({ postId, post, device }: IPostsListItemPr
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
                 <Link
                     onClick={() => {
                         if (device === "mobile") {
@@ -89,7 +89,7 @@ export default function PostsListItem({ postId, post, device }: IPostsListItemPr
                         {post.topic}
                     </span>
                 </Link>
-                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
+                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${selectedPostId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
