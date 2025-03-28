@@ -124,7 +124,7 @@ export default function NewPost() {
                                     </i>
                                 </small>
                             </div>
-                            <button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex focus:outline-none  bg-[#4A90E2] font-bold text-base group-hover:bg-white group-hover:text-[#4A90E2]" type="submit" disabled={!topic.trim() || !keywords.trim()}>
+                            <button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex focus:outline-none  bg-[#4A90E2] font-bold text-base group-hover:bg-white group-hover:text-[#4A90E2] disabled:opacity-30" type="submit" disabled={!topic.trim() || !keywords.trim()}>
                                 GENERATE
                             </button>
                         </form>
