@@ -11,14 +11,18 @@ import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import DeleteModal from "../DeleteModal";
 import ShareModal from "../ShareModal";
+import { useMenuContext } from "@/context/MenuContext";
+import Modal from "../Modal";
 
-export default function PostsListItem({ postId, post }: IPostsListItemProps): React.JSX.Element {
+export default function PostsListItem({ selectedPostId, post, device }: IPostsListItemProps): React.JSX.Element {
     const { setPosts } = useDataContext()
     const router = useRouter();
+    const { setIsMobileOpen } = useMenuContext()
     const [isDelete, setIsDelete] = useState(false);
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const [isPostShared, setIsPostShared] = useState(post.isShared);
-    const [isModalOpened, setIsModalOpened] = useState<"delete" | "share" | false>(false);
+    const [modalType, setModalType] = useState<"delete" | "share" | undefined>(undefined);
+    const [isModalOpened, setIsModalOpened] = useState<true | false>(false);
 
     const handleDelete = async (id: string | ObjectId) => {
         setIsDelete(true);
@@ -34,7 +38,7 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
             if (!res.ok) throw new Error(`Failed to delete post`);
 
             setPosts(prevPosts => prevPosts!.filter(post => post._id !== id));
-            if (postId === id) {
+            if (selectedPostId === id) {
                 router.push("/post/new");
             }
         } catch (error) {
@@ -44,10 +48,7 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
 
     };
     const handleSharePost = async (id: string | ObjectId) => {
-        setIsPostShared(prev => {
-            const bool = !!prev;
-            return !bool
-        });
+
         try {
             const res = await fetch(`/api/sharePost`, {
                 method: "POST",
@@ -59,9 +60,8 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
             const data = await res.json() as { _id: ObjectId, isShared: boolean };
 
             if (!res.ok) throw new Error(`Failed to share post`);
-
+            setIsPostShared(data.isShared);
         } catch (error) {
-            setIsPostShared(prev => !prev)
             console.error("Failed to share post:", error);
         }
 
@@ -72,13 +72,22 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${postId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
-                <Link href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
+                <Link
+                    onClick={() => {
+                        if (device === "mobile") {
+                            setIsMobileOpen(false)
+                        }
+                        else {
+                            return
+                        }
+                    }}
+                    href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
                     <span className="text-sm">
                         {post.topic}
                     </span>
                 </Link>
-                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${postId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
+                <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${selectedPostId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
@@ -86,7 +95,8 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
                         <button onClick={() => {
                             handleSharePost(post._id)
                             setIsMenuOpened(false)
-                            setIsModalOpened("share")
+                            setModalType("share")
+                            setIsModalOpened(true)
                         }} className="flex items-center gap-2 text-black/60 hover:text-black/100 basis-2 flex-initial text-xs">
                             {!isPostShared ?
                                 <>
@@ -98,9 +108,12 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
                                 </>
                             }
                         </button>
+
                         <button onClick={() => {
                             setIsMenuOpened(false)
-                            setIsModalOpened("delete")
+                            setIsModalOpened(true)
+                            setModalType("delete")
+
                         }} className="flex items-center gap-2 text-black/50 hover:text-black/100 basis-2 flex-initial text-xs">
                             <FontAwesomeIcon icon={faTrash} /> Remove
                         </button>
@@ -109,12 +122,23 @@ export default function PostsListItem({ postId, post }: IPostsListItemProps): Re
             </li >
 
 
-            {
+            {/* {
                 isPostShared && isModalOpened === "share" &&
                 <ShareModal id={post._id} setIsModalOpened={setIsModalOpened} />}
             {
                 isModalOpened === "delete" &&
                 <DeleteModal setIsModalOpened={setIsModalOpened} deleteFunc={async () => handleDelete(post._id)} />
+            } */}
+
+            {
+                isModalOpened &&
+                <Modal
+                    id={post._id}
+                    closeFunc={() => setIsModalOpened(false)}
+                    modalType={modalType}
+                    deleteFunc={async () => handleDelete(post._id)}
+                    isPostShared={isPostShared}
+                />
             }
 
         </>

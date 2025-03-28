@@ -5,12 +5,12 @@ import { useMemo } from "react";
 import { useDataContext } from "@/context/DataContext";
 import PostsListItem from "@/components/PostsListItem";
 
-export default function SidebarMain({ }: ISidebarMainProps) {
+export default function SidebarMain({ device }: ISidebarMainProps) {
 
     const { posts } = useDataContext()
 
     const pathname = usePathname();
-    const postId = useMemo(() => {
+    const selectedPostId = useMemo(() => {
         return pathname?.match(/^\/post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;
     }, [pathname]);
 
@@ -34,7 +34,7 @@ export default function SidebarMain({ }: ISidebarMainProps) {
             }
             {posts && (<ul>
                 {posts && posts.map(post => (
-                    <PostsListItem key={String(post._id)} postId={postId} post={post} />
+                    <PostsListItem key={String(post._id)} selectedPostId={selectedPostId} post={post} device={device} />
                 ))}
             </ul>)}
         </main>
