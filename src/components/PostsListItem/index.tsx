@@ -74,7 +74,7 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""} hover:bg-[#cccccc85]`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white hover:bg-[#4485cf]" : "hover:bg-[#cccccc85]"} ${isDelete ? "opacity-50" : ""}` }>
                 <Link
                     
                     onClick={() => {
