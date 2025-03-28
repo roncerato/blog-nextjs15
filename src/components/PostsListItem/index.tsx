@@ -48,7 +48,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
 
     };
     const handleSharePost = async (id: string | ObjectId) => {
-
+        setIsMenuOpened(false)
+        setModalType("share")
+        setIsModalOpened(isPostShared ? false : true)
         try {
             const res = await fetch(`/api/sharePost`, {
                 method: "POST",
@@ -72,8 +74,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""}`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white" : ""} ${isDelete ? "opacity-50" : ""} hover:bg-[#cccccc85]`}>
                 <Link
+                    
                     onClick={() => {
                         if (device === "mobile") {
                             setIsMobileOpen(false)
@@ -82,7 +85,7 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                             return
                         }
                     }}
-                    href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap">
+                    href={`/post/${post._id}`} className="block w-full text-ellipsis overflow-hidden whitespace-nowrap hover:no-underline">
                     <span className="text-sm">
                         {post.topic}
                     </span>
@@ -91,12 +94,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
-                    isMenuOpened && <div ref={ref} className="absolute top-full left-[90%] px-3 py-2 shadow-sm shadow-black/25 bg-[#F7F7F7] rounded-sm z-50 flex gap-3 flex-col">
+                    isMenuOpened && <div ref={ref} className="absolute top-full left-[70%] px-3 py-2 shadow-sm shadow-black/25 bg-[#F7F7F7] rounded-sm z-50 flex gap-3 flex-col">
                         <button onClick={() => {
                             handleSharePost(post._id)
-                            setIsMenuOpened(false)
-                            setModalType("share")
-                            setIsModalOpened(true)
                         }} className="flex items-center gap-2 text-black/60 hover:text-black/100 basis-2 flex-initial text-xs">
                             {!isPostShared ?
                                 <>
