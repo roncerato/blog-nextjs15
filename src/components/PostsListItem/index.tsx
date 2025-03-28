@@ -12,6 +12,7 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import DeleteModal from "../DeleteModal";
 import ShareModal from "../ShareModal";
 import { useMenuContext } from "@/context/MenuContext";
+import Modal from "../Modal";
 
 export default function PostsListItem({ selectedPostId, post, device }: IPostsListItemProps): React.JSX.Element {
     const { setPosts } = useDataContext()
@@ -20,7 +21,8 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     const [isDelete, setIsDelete] = useState(false);
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const [isPostShared, setIsPostShared] = useState(post.isShared);
-    const [isModalOpened, setIsModalOpened] = useState<"delete" | "share" | false>(false);
+    const [modalType, setModalType] = useState<"delete" | "share" | undefined>(undefined);
+    const [isModalOpened, setIsModalOpened] = useState<true | false>(false);
 
     const handleDelete = async (id: string | ObjectId) => {
         setIsDelete(true);
@@ -46,10 +48,7 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
 
     };
     const handleSharePost = async (id: string | ObjectId) => {
-        setIsPostShared(prev => {
-            const bool = !!prev;
-            return !bool
-        });
+
         try {
             const res = await fetch(`/api/sharePost`, {
                 method: "POST",
@@ -61,9 +60,8 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
             const data = await res.json() as { _id: ObjectId, isShared: boolean };
 
             if (!res.ok) throw new Error(`Failed to share post`);
-
+            setIsPostShared(data.isShared);
         } catch (error) {
-            setIsPostShared(prev => !prev)
             console.error("Failed to share post:", error);
         }
 
@@ -97,7 +95,8 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                         <button onClick={() => {
                             handleSharePost(post._id)
                             setIsMenuOpened(false)
-                            setIsModalOpened("share")
+                            setModalType("share")
+                            setIsModalOpened(true)
                         }} className="flex items-center gap-2 text-black/60 hover:text-black/100 basis-2 flex-initial text-xs">
                             {!isPostShared ?
                                 <>
@@ -109,9 +108,12 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                                 </>
                             }
                         </button>
+
                         <button onClick={() => {
                             setIsMenuOpened(false)
-                            setIsModalOpened("delete")
+                            setIsModalOpened(true)
+                            setModalType("delete")
+
                         }} className="flex items-center gap-2 text-black/50 hover:text-black/100 basis-2 flex-initial text-xs">
                             <FontAwesomeIcon icon={faTrash} /> Remove
                         </button>
@@ -120,12 +122,23 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
             </li >
 
 
-            {
+            {/* {
                 isPostShared && isModalOpened === "share" &&
                 <ShareModal id={post._id} setIsModalOpened={setIsModalOpened} />}
             {
                 isModalOpened === "delete" &&
                 <DeleteModal setIsModalOpened={setIsModalOpened} deleteFunc={async () => handleDelete(post._id)} />
+            } */}
+
+            {
+                isModalOpened &&
+                <Modal
+                    id={post._id}
+                    closeFunc={() => setIsModalOpened(false)}
+                    modalType={modalType}
+                    deleteFunc={async () => handleDelete(post._id)}
+                    isPostShared={isPostShared}
+                />
             }
 
         </>
