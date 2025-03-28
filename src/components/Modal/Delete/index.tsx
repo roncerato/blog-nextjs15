@@ -12,13 +12,15 @@ export default function Delete({ closeFunc, deleteFunc }: DeleteProps) {
 
                 <div className="flex gap-2 w-full">
                     <button
-                        className="btn w-full p-2 bg-red-600 flex-auto"
+                        className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 rounded-full focus:outline-none font-bold text-base bg-red-600 hover:bg-red-700"
                         onClick={deleteFunc}>
                         DELETE
                     </button>
                     <button
                         onClick={closeFunc}
-                        className="btn w-full bg-slate-400 p-2 flex-auto">NONE</button>
+                        className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 rounded-full focus:outline-none font-bold text-base bg-[#ADADAE] hover:bg-[#4A90E2]">
+                            NONE
+                        </button>
                 </div>
             </>
         </div>
