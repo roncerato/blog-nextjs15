@@ -12,7 +12,7 @@ export default function MobileMenu() {
     const { availableTokens } = useDataContext()
     return (
         <>
-            <div className={`absolute top-0 left-0 p-4 grid gap-2 grid-cols-2 w-full md:hidden`}>
+            <div className={`absolute top-0 left-0 p-4 grid gap-2 grid-cols-2 w-full md:hidden backdrop-blur z-40 bg-white/65`}>
                 <div className={`grid gap-2 col-start-1 col-end-2 row-start-1 row-end-2 content-start justify-start grid-cols-[auto,auto]`}>
                     <button
                         className={``}
