@@ -36,7 +36,7 @@ export default function MobileMenu() {
             </div>
             <aside ref={ref} className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isMobileOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full z-50 md:hidden block`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
-                    <SidebarHeader isMenuOpened={isMobileOpen} setIsMenuOpened={setIsMobileOpen} />
+                    <SidebarHeader isMenuOpened={isMobileOpen} setIsMenuOpened={setIsMobileOpen} device={'mobile'}/>
                     <SidebarMain device='mobile' />
                     <SidebarFooter />
                 </div>
