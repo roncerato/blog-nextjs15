@@ -7,9 +7,11 @@ import Link from "next/link";
 import { SidebarFooter } from "../Sidebar/SidebarFooter";
 import { SidebarHeader } from "../Sidebar/SidebarHeader";
 import SidebarMain from "../Sidebar/SidebarMain";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 export default function MobileMenu() {
     const { isMobileOpen, setIsMobileOpen } = useMenuContext()
     const { availableTokens } = useDataContext()
+    const ref = useOutsideClick(() => setIsMobileOpen(false))
     return (
         <>
             <div className={`absolute top-0 left-0 p-4 grid gap-2 grid-cols-2 w-full md:hidden backdrop-blur z-40 bg-white/65`}>
@@ -32,7 +34,7 @@ export default function MobileMenu() {
                     <Icons.Logo className="w-20" />
                 </div>
             </div>
-            <aside className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isMobileOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full z-50 md:hidden block`}>
+            <aside ref={ref} className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isMobileOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full z-50 md:hidden block`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
                     <SidebarHeader isMenuOpened={isMobileOpen} setIsMenuOpened={setIsMobileOpen} />
                     <SidebarMain device='mobile' />
