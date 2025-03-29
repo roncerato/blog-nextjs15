@@ -15,7 +15,7 @@ export default function PricingCard({ name, price, tokens, desc, priceId }: IPri
         window.location.href = json.session.url;
     }
     return (
-        <div className="group flex flex-shrink-0 w-[270px] flex-col bg-[#F7F7F7] rounded-3xl hover:shadow-lg transition duration-100 hover:bg-[#4A90E2] hover:text-white">
+        <div className="group flex flex-shrink-0 w-[240px] flex-col bg-[#F7F7F7] rounded-3xl hover:shadow-lg transition duration-100 hover:bg-[#4A90E2] hover:text-white sm:w-[270px]">
             <div className="px-6 py-8 sm:p-10 sm:pb-6 flex flex-col flex-1">
                 <div className="w-full text-left flex flex-col flex-grow justify-between">
                     <div>

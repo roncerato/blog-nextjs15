@@ -16,7 +16,7 @@ export default function Sidebar({ }: ISidebarProps) {
 
     return (
         <>
-            <div className={`absolute top-0 md:grid left-0 p-4 gap-2 grid-cols-2 w-full hidden`}>
+            <div className={`absolute top-0 md:grid left-0 p-4 gap-2 grid-cols-2 w-full hidden backdrop-blur z-40 bg-white/65`}>
                 <div className={`grid gap-2 col-start-1 col-end-2 row-start-1 row-end-2 content-start justify-start grid-cols-[auto,auto]`}>
                     <button
                         className={``}
@@ -36,7 +36,7 @@ export default function Sidebar({ }: ISidebarProps) {
                     <Icons.Logo className="w-20" />
                 </div>
             </div>
-            <aside className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all w-full h-full relative z-50 md:block hidden`}>
+            <aside className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isOpen ? "max-w-[300px]" : "max-w-[0px] z-50"} transition-all w-full h-full relative z-50 md:block hidden`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
                     <SidebarHeader isMenuOpened={isOpen} setIsMenuOpened={setIsOpen} />
                     <SidebarMain device='desktop' />

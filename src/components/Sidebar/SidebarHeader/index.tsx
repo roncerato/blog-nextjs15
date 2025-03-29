@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useDataContext } from "@/context/DataContext";
 import { Icons } from "@/assets/Icons";
 
-export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened }: SidebarHeaderProps) => {
+export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened, device }: SidebarHeaderProps) => {
 
     const { availableTokens } = useDataContext()
 
@@ -25,13 +25,33 @@ export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened }: SidebarHeaderPr
                     aria-disabled={!!availableTokens}
                     aria-label="Create a new post"
                     title="Create a new post"
+                    onClick={()=>{
+                        if (device === "mobile") {
+                            setIsMenuOpened(false)
+                        }
+                        else {
+                            return
+                        }
+                    }}
                 >
                     <Icons.Plus fill="#ADADAE" height={18} width={18} className="hover:fill-[#6e6e6e]" />
                 </Link>
             </div>
             <div className="flex justify-between items-center mt-6 mb-4">
                 <Icons.Logo className="w-20" />
-                <Link href="/token-topup" className="flex justify-center gap-1 items-center" title="Top up your tokens">
+                <Link 
+                href="/token-topup" 
+                className="flex justify-center gap-1 items-center" 
+                title="Top up your tokens"
+                onClick={()=>{
+                    if (device === "mobile") {
+                        setIsMenuOpened(false)
+                    }
+                    else {
+                        return
+                    }
+                }}
+                >
                     <Icons.Token width={20} height={20} />
                     <h5 className="text-black font-semibold leading-1">
                         {availableTokens ? availableTokens : 0}
