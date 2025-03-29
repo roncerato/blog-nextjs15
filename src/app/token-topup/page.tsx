@@ -10,7 +10,7 @@ export default async function TokenTopup() {
 
     return (
         <div className="h-full overflow-x-hidden grid content-center justify-center gap-8">
-            <div>
+            <div className="p-4">
                 <h1 className="text-4xl font-bold text-center font-heading">
                     TOKEN PACKAGES
                 </h1>
