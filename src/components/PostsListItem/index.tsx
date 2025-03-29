@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDataContext } from "@/context/DataContext";
 import { faBan, faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +8,6 @@ import { IPostsListItemProps } from "./PostsListItem.props";
 import { useState } from "react";
 import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import DeleteModal from "../DeleteModal";
-import ShareModal from "../ShareModal";
 import { useMenuContext } from "@/context/MenuContext";
 import Modal from "../Modal";
 
@@ -96,6 +93,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                 {
                     isMenuOpened && <div ref={ref} className="absolute top-full left-[70%] px-3 py-2 shadow-sm shadow-black/25 bg-[#F7F7F7] rounded-sm z-50 flex gap-3 flex-col">
                         <button onClick={() => {
+                            if (device === "mobile") {
+                                setIsMobileOpen(false)
+                            }
                             handleSharePost(post._id)
                         }} className="flex items-center gap-2 text-black/60 hover:text-black/100 basis-2 flex-initial text-xs">
                             {!isPostShared ?
@@ -113,6 +113,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                             setIsMenuOpened(false)
                             setIsModalOpened(true)
                             setModalType("delete")
+                            if (device === "mobile") {
+                                setIsMobileOpen(false)
+                            }
 
                         }} className="flex items-center gap-2 text-black/50 hover:text-black/100 basis-2 flex-initial text-xs">
                             <FontAwesomeIcon icon={faTrash} /> Remove
@@ -121,14 +124,6 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                 }
             </li >
 
-
-            {/* {
-                isPostShared && isModalOpened === "share" &&
-                <ShareModal id={post._id} setIsModalOpened={setIsModalOpened} />}
-            {
-                isModalOpened === "delete" &&
-                <DeleteModal setIsModalOpened={setIsModalOpened} deleteFunc={async () => handleDelete(post._id)} />
-            } */}
 
             {
                 isModalOpened &&
