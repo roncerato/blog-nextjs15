@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
                 auth0Id: session?.user?.sub
             }
         );
-        const tokens = userProfile?.availableTokens
+        const tokens = userProfile?.availableTokens || 0
         return NextResponse.json(tokens);
     } catch (e: unknown) {
         console.log("error trying to get user data: ", e)
