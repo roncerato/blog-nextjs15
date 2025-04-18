@@ -1,5 +1,5 @@
 import Image from "next/image"
-import HeroImage from "../../public/hero.webp"
+import HeroImage from "../../../public/hero.webp"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
