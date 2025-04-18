@@ -1,78 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth0 } from "@/lib/auth0";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+import { auth0 } from "./lib/auth0";
+import { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-    const authRes = await auth0.middleware(request);
-    authRes.headers.set("x-current-path", request.nextUrl.pathname);
-    const session = await auth0.getSession();
-
-    const isRoot = request.nextUrl.pathname === "/";
-    const isAuthRoute = request.nextUrl.pathname.startsWith("/auth");
-
-    const isSuccessOrCancel = request.nextUrl.pathname.startsWith("/success") || request.nextUrl.pathname.startsWith("/cancel");
-    const isNewPostPage = request.nextUrl.pathname.startsWith("/post/new")
-
-    if (isSuccessOrCancel) {
-        const sessionID = request.nextUrl.searchParams.get("session_id");
-        if (!sessionID) {
-            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
-        }
-
-        const res = await fetch(`${request.nextUrl.origin}/api/checkPayment?session_id=${sessionID}`);
-
-        if (res.status !== 200) {
-            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
-        }
+    const auth0Response = await auth0.middleware(request);
+    if (auth0Response && request.nextUrl.pathname !== "/") {
+        return auth0Response;
     }
 
-    if (request.nextUrl.pathname.startsWith("/api")) {
-        return NextResponse.next();
-    }
-    if (request.nextUrl.pathname.startsWith("/shared-post")) {
-        return NextResponse.next();
-    }
-
-    if (session === null) {
-        if (isRoot || isAuthRoute) {
-            return authRes;
-        }
-        return NextResponse.redirect(new URL("/", request.nextUrl.origin));
-
-    } else {
-
-        const res = await fetch(`${request.nextUrl.origin}/api/getTokens`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ session }),
-        });
-        const tokens = await res.json() as number | undefined;
-
-        if (isRoot) {
-            if (!tokens) {
-                return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
-            }
-            else {
-                return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
-            }
-        }
-
-        if (isNewPostPage && !tokens) {
-            return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
-        }
-    }
-    return authRes
+    return createMiddleware(routing)(request);
 }
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-         */
-        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+        "/",
+
+        "/(zh|en|ar)/:path*",
+
+        "/((?!_next/image|_next/static|images|api|favicon.ico|_vercel|.*\\..*).*)",
     ],
-}
+};
