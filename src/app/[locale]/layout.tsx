@@ -1,4 +1,4 @@
-import { AppLayout } from "../components/AppLayout";
+import { AppLayout } from "../../components/AppLayout";
 import "./globals.scss";
 import { Raleway, Roboto, } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css"
