@@ -16,7 +16,7 @@ export const config = {
     matcher: [
         "/",
 
-        "/(zh|en|ar)/:path*",
+        "/(en|ru)/:path*",
 
         "/((?!_next/image|_next/static|images|api|favicon.ico|_vercel|.*\\..*).*)",
     ],
