@@ -1,15 +1,18 @@
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostBodyProps } from "./PostBody.props";
+import { useTranslations } from "next-intl"
 
 export default function PostBody({ post }: PostBodyProps) {
+    const t = useTranslations('pages.post');
+
     return (
 
         <div className="px-5 overflow-auto h-full py-10">
             <div className="max-w-screen-sm mx-auto mt-6 flex flex-col gap-6">
                 <div>
                     <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
-                        SEO title & meta description
+                        {t('seo')}
                     </h5>
 
                     <div className="p-4 border-b border-stone-200">
@@ -19,7 +22,7 @@ export default function PostBody({ post }: PostBodyProps) {
                 </div>
                 <div>
                     <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md ">
-                        Keywords
+                        {t('keywords')}
                     </h5>
 
                     <ul className="flex flex-wrap  gap-1 p-4 border-b border-stone-200">
@@ -33,7 +36,7 @@ export default function PostBody({ post }: PostBodyProps) {
                 <div>
 
                     <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
-                        Blog post
+                        {t('blog')}
                     </h5>
 
                     <div className="post-body" dangerouslySetInnerHTML={{ __html: post.postContent || "" }} />
