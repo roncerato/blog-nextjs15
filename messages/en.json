@@ -43,5 +43,15 @@
                 "option_none": "NONE"
             }
         }
+    },
+    "components": {
+        "sidebar": {
+            "create_post": "Create a post",
+            "topup_tokens": "Top up your tokens",
+            "empty": {
+                "title": "There's nothing here yet",
+                "desc": "Создайте свой первый пост, нажав на кнопку ниже."
+            }
+        }
     }
 }
