@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
     const auth0Response = await auth0.middleware(request);
-    if (auth0Response && request.nextUrl.pathname !== "/") {
+    if (auth0Response && request.nextUrl.pathname.startsWith("/auth")) {
         return auth0Response;
     }
 
