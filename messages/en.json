@@ -1,0 +1,57 @@
+{
+    "pages": {
+        "post": {
+            "use_template": "use a template",
+            "topic": "Topic",
+            "template_topic": "Top 10 tips for dog owners",
+            "keywords": "Keywords",
+            "template_keywords": "first-time dog owners, common dog health issues, best dog breeds",
+            "keywords_hint": "Separate keywords with commas.",
+            "example_label": "For example",
+            "example_keywords": "blogging, writing, content marketing",
+            "generate": "GENERATE",
+            "seo": "SEO title & meta description",
+            "blog": "Blog post"
+        },
+        "token_topup": {
+            "title": "TOKEN PACKAGES",
+            "desc": "Choose a token package that suits your needs",
+            "tokens": "{count, plural, one {# token} other {# tokens}}",
+            "one_time_purchase": "one-time purchase"
+        },
+        "cancel": {
+            "title": "The operation was not completed"
+        },
+        "success": {
+            "title": "Thank you for your purchase!!!"
+        }
+    },
+    "modal": {
+        "post": {
+            "share": {
+                "share_btn": "Share",
+                "unshare_btn": "Unshare",
+                "title": "Share this post!",
+                "desc": "Copy the link and send it to your friends so they can watch this post too.",
+                "copy": "COPY",
+                "copied": "COPIED!"
+            },
+            "delete": {
+                "text": "DELETE",
+                "title": "Are you sure?",
+                "desc": "This action is irreversible. Once deleted, you will not be able to recover this post.",
+                "option_none": "NONE"
+            }
+        }
+    },
+    "components": {
+        "sidebar": {
+            "create_post": "Create a post",
+            "topup_tokens": "Top up your tokens",
+            "empty": {
+                "title": "There's nothing here yet",
+                "desc": "Создайте свой первый пост, нажав на кнопку ниже."
+            }
+        }
+    }
+}

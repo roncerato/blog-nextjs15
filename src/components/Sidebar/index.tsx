@@ -6,11 +6,12 @@ import SidebarMain from "./SidebarMain";
 import { useDataContext } from "@/context/DataContext";
 import { useMenuContext } from "@/context/MenuContext";
 import { Icons } from "@/assets/Icons";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 
 export default function Sidebar({ }: ISidebarProps) {
-
+    const t = useTranslations('components.sidebar');
     const { isOpen, setIsOpen } = useMenuContext()
     const { availableTokens } = useDataContext()
 
@@ -27,8 +28,8 @@ export default function Sidebar({ }: ISidebarProps) {
                         href={!!availableTokens ? "/post/new" : "#"}
                         className={`flex justify-center items-center ${!!availableTokens ? "cursor-pointer" : "cursor-not-allowed"} h-6 w-6 `}
                         aria-disabled={!!availableTokens}
-                        aria-label="Create a new post"
-                        title="Create a new post">
+                        aria-label={t("create_post")}
+                        title={t("create_post")}>
                         <Icons.Plus fill="#ADADAE" height={18} width={18} className="hover:fill-[#6e6e6e]" />
                     </Link>
                 </div>

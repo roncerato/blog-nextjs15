@@ -1,6 +1,7 @@
 import Image from "next/image"
-import HeroImage from "../../public/hero.webp"
+import HeroImage from "../../../public/hero.webp"
 import { Metadata } from "next"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Home"
@@ -14,9 +15,9 @@ export default async function Home() {
         <p>
           The AI-powered SAAS solution to generate SEO-optimized blog posts in minutes. Get high-quality content, without sacrificing your time.
         </p>
-        <a href="/auth/login" className="btn my-4">
+        <Link href="/auth/login" className="btn my-4">
           Begin
-        </a>
+        </Link>
       </div>
     </main>
   )
