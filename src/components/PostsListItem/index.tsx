@@ -2,18 +2,16 @@ import { useDataContext } from "@/context/DataContext";
 import { faBan, faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ObjectId } from "mongodb";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { IPostsListItemProps } from "./PostsListItem.props";
 import { useState } from "react";
 import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useMenuContext } from "@/context/MenuContext";
 import Modal from "../Modal";
-import { useTranslations } from "next-intl";
 
 export default function PostsListItem({ selectedPostId, post, device }: IPostsListItemProps): React.JSX.Element {
-    const t = useTranslations('modal.post');
     const { setPosts } = useDataContext()
     const router = useRouter();
     const { setIsMobileOpen } = useMenuContext()
@@ -73,9 +71,9 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     return (
         <>
             <li
-                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white hover:bg-[#4485cf]" : "hover:bg-[#cccccc85]"} ${isDelete ? "opacity-50" : ""}`}>
+                className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white hover:bg-[#4485cf]" : "hover:bg-[#cccccc85]"} ${isDelete ? "opacity-50" : ""}` }>
                 <Link
-
+                    
                     onClick={() => {
                         if (device === "mobile") {
                             setIsMobileOpen(false)
@@ -102,11 +100,11 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                         }} className="flex items-center gap-2 text-black/60 hover:text-black/100 basis-2 flex-initial text-xs">
                             {!isPostShared ?
                                 <>
-                                    <FontAwesomeIcon icon={faShare} /> {t("share.share_btn")}
+                                    <FontAwesomeIcon icon={faShare} /> Share
                                 </>
                                 :
                                 <>
-                                    <FontAwesomeIcon icon={faBan} /> {t("share.unshare_btn")}
+                                    <FontAwesomeIcon icon={faBan} /> Unshare
                                 </>
                             }
                         </button>
@@ -120,7 +118,7 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                             }
 
                         }} className="flex items-center gap-2 text-black/50 hover:text-black/100 basis-2 flex-initial text-xs">
-                            <FontAwesomeIcon icon={faTrash} /> {t("delete.text")}
+                            <FontAwesomeIcon icon={faTrash} /> Remove
                         </button>
                     </div>
                 }

@@ -1,13 +1,12 @@
 "use client";
 import { ISidebarMainProps } from "./SidebarMain.props";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { useDataContext } from "@/context/DataContext";
 import PostsListItem from "@/components/PostsListItem";
-import { useTranslations } from "next-intl";
 
 export default function SidebarMain({ device }: ISidebarMainProps) {
-    const t = useTranslations('components.sidebar');
+
     const { posts } = useDataContext()
 
     const pathname = usePathname();
@@ -28,7 +27,7 @@ export default function SidebarMain({ device }: ISidebarMainProps) {
                 posts && posts.length === 0 && (
                     <div className="flex-1 h-full flex items-center justify-center">
                         <span className="block text-center flex-1 italic font-heading text-sm text-[#ADADAE]">
-                            {t("empty.title")}
+                            No posts yet
                         </span>
                     </div>
                 )
