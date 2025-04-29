@@ -11,6 +11,7 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useMenuContext } from "@/context/MenuContext";
 import Modal from "../Modal";
 import { Icons } from "@/assets/Icons";
+import Toast from "../Toast";
 
 export default function PostsListItem({ selectedPostId, post, device, sharedPostId }: IPostsListItemProps): React.JSX.Element {
     const { setPosts } = useDataContext()
@@ -24,6 +25,7 @@ export default function PostsListItem({ selectedPostId, post, device, sharedPost
     const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
     const { hostname: host, port } = window.location;
     const link = `${protocol}${host}${port ? ":" + port : ""}/shared-post/${post._id}`;
+
     const copyToClipboard = async () => {
         try {
             await navigator.clipboard.writeText(link);
@@ -78,6 +80,7 @@ export default function PostsListItem({ selectedPostId, post, device, sharedPost
     }
     const ref = useOutsideClick(() => setIsMenuOpened(false)
     )
+    const [showToast, setShowToast] = useState(false);
 
     return (
         <>
@@ -105,9 +108,20 @@ export default function PostsListItem({ selectedPostId, post, device, sharedPost
                         className="self-center"
                         aria-label="Copy the share link"
                         title="Copy the share link"
-                        onClick={copyToClipboard}>
+                        onClick={() => {
+                            copyToClipboard()
+                            setShowToast(true)
+                        }}>
                         <Icons.Share width={12} height={12} fill="#ADADAE" className={` ${selectedPostId === post._id ? "fill-white/50 hover:fill-white/100" : "fill-[#ADADAE] hover:fill-[#6e6e6e]"}`} />
                     </button>
+                )}
+                {showToast && (
+                    <Toast
+                        message="Успешно скопированно!"
+                        type="success"
+                        duration={3000}
+                        onClose={() => setShowToast(false)}
+                    />
                 )}
                 <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${selectedPostId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
