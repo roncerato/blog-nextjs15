@@ -1,15 +1,18 @@
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostBodyProps } from "./PostBody.props";
+import { useTranslations } from "next-intl"
 import SavePageButton from "../SavePageBtn";
 
 export default function PostBody({ post }: PostBodyProps) {
+    const t = useTranslations('pages.post');
     const postData = {
         ...post,
         _id: post._id.toString(),
         userId: post.userId.toString(),
         createdAt: post.createdAt.toISOString(),
       };
+    console.log(post)
     return (
         <>
             <SavePageButton postData={postData}/>
@@ -17,18 +20,18 @@ export default function PostBody({ post }: PostBodyProps) {
                 <div className="max-w-screen-sm mx-auto mt-6 flex flex-col gap-6">
                     <div>
                         <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
-                            SEO title & meta description
+                            {t('seo')}
                         </h5>
 
-                    <div className="p-4 border-b border-stone-200">
-                        <div className="text-[#4A90E2] text-2xl font-bold font-heading">{post.title}</div>
-                        <div className="mt-2 text-sm">{post.metaDescription}</div>
+                        <div className="p-4 border-b border-stone-200">
+                            <div className="text-[#4A90E2] text-2xl font-bold font-heading">{post.title}</div>
+                            <div className="mt-2 text-sm">{post.metaDescription}</div>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md ">
-                        Keywords
-                    </h5>
+                    <div>
+                        <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md ">
+                            {t('keywords')}
+                        </h5>
 
                         <ul className="flex flex-wrap  gap-1 p-4 border-b border-stone-200">
                             {post.keywords.split(",").map((keyword, i) => (
@@ -40,9 +43,9 @@ export default function PostBody({ post }: PostBodyProps) {
                     </div>
                     <div>
 
-                    <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
-                        Blog post
-                    </h5>
+                        <h5 className="text-sm font-bold p-2 pl-4 font-heading border-b-[1px] border-[#e5e7eb] bg-[#4A90E2] text-white rounded-md">
+                            {t('blog')}
+                        </h5>
 
                         <div className="post-body" id="post-body" dangerouslySetInnerHTML={{ __html: post.postContent || "" }} />
                     </div>

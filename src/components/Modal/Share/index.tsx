@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { ShareProps } from "./Share.props";
+import { useTranslations } from "next-intl";
 
 export default function Share({ id, isPostShared }: ShareProps) {
+    const t = useTranslations('modal.post.share');
     const [copied, setCopied] = useState(false);
     const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
     const { hostname: host, port } = window.location;
@@ -24,10 +26,10 @@ export default function Share({ id, isPostShared }: ShareProps) {
     return (
         <div className="flex flex-col flex-1 justify-center items-center gap-3 bg-[#F7F7F7]">
             <h2 className="text-lg font-bold text-black text-center">
-                🔗 Share this post!
+                🔗 {t("title")}
             </h2>
             <p className="text-sm text-black text-center">
-                Copy the link and send it to your friends so they can watch this post too.
+                {t("desc")}
             </p>
             <div className="flex gap-2 w-full">
                 <input
@@ -42,7 +44,7 @@ export default function Share({ id, isPostShared }: ShareProps) {
                     className="flex items-center justify-center px-3 py-1.5 text-center text-white duration-200 border-2 border-[#4A90E2] rounded-full hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] bg-[#4A90E2] font-bold text-base box-content w-20"
                     onClick={copyToClipboard}
                 >
-                    {copied ? "COPIED!" : "COPY"}
+                    {copied ? t("copied") : t("copy")}
                 </button>
             </div>
         </div>
