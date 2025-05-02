@@ -49,7 +49,7 @@ export const SidebarFooter = ({ }: SidebarFooterProps) => {
                                     {session.family_name}
                                 </h2>
                             </div>
-                            <Link href="/auth/logout">
+                            <Link href="/auth/logout" passHref>
                                 <Icons.Logout width={24} height={24} fill="#ADADAE" className="hover:fill-[#6e6e6e]" />
                             </Link>
                         </div>
