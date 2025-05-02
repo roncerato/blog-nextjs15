@@ -15,7 +15,7 @@ export default async function Home() {
         <p>
           The AI-powered SAAS solution to generate SEO-optimized blog posts in minutes. Get high-quality content, without sacrificing your time.
         </p>
-        <Link href="/auth/login" className="btn my-4">
+        <Link href="/auth/login" className="btn my-4" passHref>
           Begin
         </Link>
       </div>
