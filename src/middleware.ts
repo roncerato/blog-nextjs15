@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing"
 const intlMiddleware = createMiddleware(routing)
 
 type RoutingConfig = {
-    locales: string[];
+    locales: readonly string[];
     defaultLocale: string;
 };
 
