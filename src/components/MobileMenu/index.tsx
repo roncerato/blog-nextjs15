@@ -3,14 +3,12 @@
 import { Icons } from "@/assets/Icons";
 import { useDataContext } from "@/context/DataContext";
 import { useMenuContext } from "@/context/MenuContext";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import { SidebarFooter } from "../Sidebar/SidebarFooter";
 import { SidebarHeader } from "../Sidebar/SidebarHeader";
 import SidebarMain from "../Sidebar/SidebarMain";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { useTranslations } from "next-intl";
 export default function MobileMenu() {
-    const t = useTranslations('components.sidebar');
     const { isMobileOpen, setIsMobileOpen } = useMenuContext()
     const { availableTokens } = useDataContext()
     const ref = useOutsideClick(() => setIsMobileOpen(false))
@@ -27,8 +25,8 @@ export default function MobileMenu() {
                         href={!!availableTokens ? "/post/new" : "#"}
                         className={`flex justify-center items-center ${!!availableTokens ? "cursor-pointer" : "cursor-not-allowed"} h-6 w-6 `}
                         aria-disabled={!!availableTokens}
-                        aria-label={t("create_post")}
-                        title={t("create_post")}>
+                        aria-label="Create a new post"
+                        title="Create a new post">
                         <Icons.Plus fill="#ADADAE" height={18} width={18} className="hover:fill-[#6e6e6e]" />
                     </Link>
                 </div>
@@ -38,7 +36,7 @@ export default function MobileMenu() {
             </div>
             <aside ref={ref} className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isMobileOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full z-50 md:hidden block`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
-                    <SidebarHeader isMenuOpened={isMobileOpen} setIsMenuOpened={setIsMobileOpen} device={'mobile'} />
+                    <SidebarHeader isMenuOpened={isMobileOpen} setIsMenuOpened={setIsMobileOpen} device={'mobile'}/>
                     <SidebarMain device='mobile' />
                     <SidebarFooter />
                 </div>

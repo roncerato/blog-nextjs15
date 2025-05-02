@@ -1,12 +1,12 @@
 "use client";
 
 import { SidebarHeaderProps } from "./SidebarHeader.props"
-import { Link } from "@/i18n/navigation";
+import Link from "next/link"
 import { useDataContext } from "@/context/DataContext";
 import { Icons } from "@/assets/Icons";
-import { useTranslations } from "next-intl";
+
 export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened, device }: SidebarHeaderProps) => {
-    const t = useTranslations('components.sidebar');
+
     const { availableTokens } = useDataContext()
 
     return (
@@ -23,9 +23,9 @@ export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened, device }: Sidebar
                     href={!!availableTokens ? "/post/new" : "#"}
                     className={`flex justify-center items-center ${!!availableTokens ? "cursor-pointer" : "cursor-not-allowed"}`}
                     aria-disabled={!!availableTokens}
-                    aria-label={t("create_post")}
-                    title={t("create_post")}
-                    onClick={() => {
+                    aria-label="Create a new post"
+                    title="Create a new post"
+                    onClick={()=>{
                         if (device === "mobile") {
                             setIsMenuOpened(false)
                         }
@@ -39,18 +39,18 @@ export const SidebarHeader = ({ isMenuOpened, setIsMenuOpened, device }: Sidebar
             </div>
             <div className="flex justify-between items-center mt-6 mb-4">
                 <Icons.Logo className="w-20" />
-                <Link
-                    href="/token-topup"
-                    className="flex justify-center gap-1 items-center"
-                    title={t("topup_tokens")}
-                    onClick={() => {
-                        if (device === "mobile") {
-                            setIsMenuOpened(false)
-                        }
-                        else {
-                            return
-                        }
-                    }}
+                <Link 
+                href="/token-topup" 
+                className="flex justify-center gap-1 items-center" 
+                title="Top up your tokens"
+                onClick={()=>{
+                    if (device === "mobile") {
+                        setIsMenuOpened(false)
+                    }
+                    else {
+                        return
+                    }
+                }}
                 >
                     <Icons.Token width={20} height={20} />
                     <h5 className="text-black font-semibold leading-1">

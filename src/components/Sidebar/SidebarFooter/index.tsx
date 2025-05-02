@@ -3,7 +3,6 @@ import Image from "next/image"
 import { Icons } from "@/assets/Icons"
 import { SessionData } from "@auth0/nextjs-auth0/server"
 import { useEffect, useState } from "react"
-import Link from "next/link"
 
 export const SidebarFooter = ({ }: SidebarFooterProps) => {
     const [session, setSession] = useState<SessionData["user"] | null>(null)
@@ -49,9 +48,9 @@ export const SidebarFooter = ({ }: SidebarFooterProps) => {
                                     {session.family_name}
                                 </h2>
                             </div>
-                            <Link href="/auth/logout">
+                            <a href="/auth/logout">
                                 <Icons.Logout width={24} height={24} fill="#ADADAE" className="hover:fill-[#6e6e6e]" />
-                            </Link>
+                            </a>
                         </div>
                     </>
                 )
