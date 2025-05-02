@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
     const authResponse = await auth0.middleware(request)
     const session = await auth0.getSession();
-    if (request.nextUrl.pathname.startsWith("/auth")) {
+    if (request.nextUrl.pathname.startsWith("/auth") || pathname.startsWith("/api")) {
         return authResponse
     }
 
@@ -56,6 +56,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|api).*)",
+        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
     ],
 }
