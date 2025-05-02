@@ -5,14 +5,12 @@ import { IDBPost } from "@/types/db"
 import { faBrain } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { WithId } from "mongodb"
-import { useTranslations } from "next-intl"
-import { useRouter } from "@/i18n/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function NewPost() {
-    const t = useTranslations('pages.post');
-    const templateTopic = t("template_topic")
-    const templateKeywords = t("template_keywords")
+    const templateTopic = "Top 10 tips for dog owners"
+    const templateKeywords = "first-time dog owners, common dog health issues, best dog breeds"
     const [topic, setTopic] = useState<string>("")
     const [keywords, setKeywords] = useState<string>("")
     const [useTemplate, setUseTemplate] = useState<boolean>(false)
@@ -55,7 +53,7 @@ export default function NewPost() {
                     <div className="m-auto w-full max-w-screen-sm p-4 rounded-xl">
                         <div className="flex items-center justify-end gap-2">
                             <span className="text-xs font-light ">
-                                {t('use_template')}
+                                use a template
                             </span>
                             <div className="flex items-center">
                                 <input
@@ -89,8 +87,7 @@ export default function NewPost() {
                             <>
                                 <label>
                                     <strong>
-                                        {t('topic')}:
-
+                                        Topic:
                                     </strong>
                                 </label>
                                 <input
@@ -106,7 +103,7 @@ export default function NewPost() {
                             <div>
                                 <label>
                                     <h4 className="font-heading font-bold mt-6">
-                                        {t('keywords')}:
+                                        Keywords:
                                     </h4>
                                 </label>
                                 <textarea
@@ -121,14 +118,14 @@ export default function NewPost() {
                                     maxLength={80} />
 
                                 <small className="block mb-2 mt-4 ml-5">
-                                    {t("keywords_hint")} <br />
+                                    Separate keywords with commas. <br />
                                     <i className="text-gray-500 mt-1 inline-block mb-2">
-                                        {t("example_label")}: &quot;{t("example_keywords")}&quot;
+                                        For example: &quot;blogging, writing, content marketing&quot;
                                     </i>
                                 </small>
                             </div>
                             <button className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 border-[#4A90E2] rounded-full nline-flex focus:outline-none  bg-[#4A90E2] font-bold text-base group-hover:bg-white group-hover:text-[#4A90E2] disabled:opacity-30" type="submit" disabled={!topic.trim() || !keywords.trim()}>
-                                {t("generate")}
+                                GENERATE
                             </button>
                         </form>
                     </div>
