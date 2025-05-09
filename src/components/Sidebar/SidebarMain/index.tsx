@@ -14,7 +14,9 @@ export default function SidebarMain({ device }: ISidebarMainProps) {
     const selectedPostId = useMemo(() => {
         return pathname?.match(/^\/post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;
     }, [pathname]);
-
+    const sharedPostId = useMemo(() => {
+        return pathname?.match(/^\/shared-post\/(?!new$)([a-zA-Z0-9]+)/)?.[1] || null;
+    }, [pathname]);
     return (
         <main className="px-2 flex-1 scrollbar-custom">
             {
@@ -35,7 +37,7 @@ export default function SidebarMain({ device }: ISidebarMainProps) {
             }
             {posts && (<ul>
                 {posts && posts.map(post => (
-                    <PostsListItem key={String(post._id)} selectedPostId={selectedPostId} post={post} device={device} />
+                    <PostsListItem key={String(post._id)} selectedPostId={selectedPostId} post={post} device={device} sharedPostId={sharedPostId} />
                 ))}
             </ul>)}
         </main>

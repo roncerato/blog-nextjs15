@@ -10,9 +10,11 @@ import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useMenuContext } from "@/context/MenuContext";
 import Modal from "../Modal";
+import { Icons } from "@/assets/Icons";
+import Toast from "../Toast";
 import { useTranslations } from "next-intl";
 
-export default function PostsListItem({ selectedPostId, post, device }: IPostsListItemProps): React.JSX.Element {
+export default function PostsListItem({ selectedPostId, post, device, sharedPostId }: IPostsListItemProps): React.JSX.Element {
     const t = useTranslations('modal.post');
     const { setPosts } = useDataContext()
     const router = useRouter();
@@ -22,6 +24,17 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     const [isPostShared, setIsPostShared] = useState(post.isShared);
     const [modalType, setModalType] = useState<"delete" | "share" | undefined>(undefined);
     const [isModalOpened, setIsModalOpened] = useState<true | false>(false);
+    const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
+    const { hostname: host, port } = window.location;
+    const link = `${protocol}${host}${port ? ":" + port : ""}/shared-post/${post._id}`;
+
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(link);
+        } catch (err) {
+            console.error("Failed to copy:", err);
+        }
+    };
 
     const handleDelete = async (id: string | ObjectId) => {
         setIsDelete(true);
@@ -69,13 +82,16 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
     }
     const ref = useOutsideClick(() => setIsMenuOpened(false)
     )
+    const [showToast, setShowToast] = useState(false);
 
     return (
         <>
             <li
                 className={`relative py-1 border border-white/0 flex justify-between rounded-full text-black gap-2 my-1 px-3 cursor-pointer ${selectedPostId === post._id ? "bg-[#4A90E2] text-white hover:bg-[#4485cf]" : "hover:bg-[#cccccc85]"} ${isDelete ? "opacity-50" : ""}`}>
+                {sharedPostId === post._id && (
+                    <span className="bg-[#4485cf] w-2 h-2 block rounded-full self-center flex-[1_0_0.5rem]"></span>
+                )}
                 <Link
-
                     onClick={() => {
                         if (device === "mobile") {
                             setIsMobileOpen(false)
@@ -89,6 +105,26 @@ export default function PostsListItem({ selectedPostId, post, device }: IPostsLi
                         {post.topic}
                     </span>
                 </Link>
+                {isPostShared && (
+                    <button
+                        className="self-center"
+                        aria-label="Copy the share link"
+                        title="Copy the share link"
+                        onClick={() => {
+                            copyToClipboard()
+                            setShowToast(true)
+                        }}>
+                        <Icons.Share width={12} height={12} fill="#ADADAE" className={` ${selectedPostId === post._id ? "fill-white/50 hover:fill-white/100" : "fill-[#ADADAE] hover:fill-[#6e6e6e]"}`} />
+                    </button>
+                )}
+                {showToast && (
+                    <Toast
+                        message="Успешно скопированно!"
+                        type="success"
+                        duration={3000}
+                        onClose={() => setShowToast(false)}
+                    />
+                )}
                 <button onClick={() => setIsMenuOpened(prev => !prev)} className={` basis-2 flex-initial ${selectedPostId === post._id ? "text-white/50 hover:text-white/100" : "text-[#ADADAE] hover:text-[#6e6e6e]"}`}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>

@@ -21,6 +21,7 @@ export default async function SharedPost({ params }: { params: Promise<{ postId:
   if (!post) {
     redirect("/post/new");
   }
+  const showDownloadBtn = false
   return (
     <>
       {isSessionNull && <div className={`absolute top-0 left-0 p-4 grid w-full backdrop-blur z-40 bg-white/65`}>
@@ -28,7 +29,7 @@ export default async function SharedPost({ params }: { params: Promise<{ postId:
           <Icons.Logo className="w-20" />
         </div>
       </div>}
-      <PostBody post={post} />
+      <PostBody post={post} showDownloadBtn={showDownloadBtn} />
     </>
   );
 }

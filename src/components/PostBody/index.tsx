@@ -4,18 +4,17 @@ import { PostBodyProps } from "./PostBody.props";
 import { useTranslations } from "next-intl"
 import SavePageButton from "../SavePageBtn";
 
-export default function PostBody({ post }: PostBodyProps) {
+export default function PostBody({ post, showDownloadBtn = true }: PostBodyProps) {
     const t = useTranslations('pages.post');
     const postData = {
         ...post,
         _id: post._id.toString(),
         userId: post.userId.toString(),
         createdAt: post.createdAt.toISOString(),
-      };
-    console.log(post)
+    };
     return (
         <>
-            <SavePageButton postData={postData}/>
+            {showDownloadBtn && <SavePageButton postData={postData} />}
             <div className="px-5 overflow-auto h-full py-10">
                 <div className="max-w-screen-sm mx-auto mt-6 flex flex-col gap-6">
                     <div>
