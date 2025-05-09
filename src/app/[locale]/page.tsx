@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Image from "next/image"
 import HeroImage from "../../../public/hero.webp"
 import { Metadata } from "next"
-import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Home"
@@ -15,9 +15,9 @@ export default async function Home() {
         <p>
           The AI-powered SAAS solution to generate SEO-optimized blog posts in minutes. Get high-quality content, without sacrificing your time.
         </p>
-        <Link href="/auth/login" className="btn my-4" passHref>
+        <a href="/auth/login" className="btn my-4">
           Begin
-        </Link>
+        </a>
       </div>
     </main>
   )
