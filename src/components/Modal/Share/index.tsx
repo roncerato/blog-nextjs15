@@ -41,7 +41,7 @@ export default function Share({ id, isPostShared }: ShareProps) {
                     value={link}
                 />
                 <button
-                    className="flex items-center justify-center px-3 py-1.5 text-center text-white duration-200 border-2 border-[#4A90E2] rounded-full hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] bg-[#4A90E2] font-bold text-base box-content w-20"
+                    className="flex items-center justify-center px-3 py-1.5 text-center text-white duration-200 border-2 border-[#4A90E2] rounded-full hover:bg-transparent hover:border-[#4A90E2] hover:text-[#4A90E2] focus:outline-none focus-visible:outline-[#4A90E2] bg-[#4A90E2] font-bold text-base box-content min-w-20"
                     onClick={copyToClipboard}
                 >
                     {copied ? t("copied") : t("copy")}
