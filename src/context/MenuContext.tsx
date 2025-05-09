@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
+import { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
 
 
 interface MenuContextType {
@@ -14,12 +14,29 @@ const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
 
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpenState] = useState(true);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem("sidebar-open");
+        if (stored !== null) {
+            setIsOpenState(stored === "true");
+        }
+        setHydrated(true);
+    }, []);
+
+    const setIsOpen = (value: SetStateAction<boolean>) => {
+        setIsOpenState((prev) => {
+            const next = typeof value === "function" ? value(prev) : value;
+            localStorage.setItem("sidebar-open", next.toString());
+            return next;
+        });
+    };
 
     return (
         <MenuContext.Provider value={{ isOpen, setIsOpen, isMobileOpen, setIsMobileOpen }}>
-            {children}
+            {hydrated ? children : null}
         </MenuContext.Provider>
     );
 };
