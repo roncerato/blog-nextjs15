@@ -24,22 +24,17 @@ export function getLocaleFromPath(pathname: string, routing: RoutingConfig): str
 
 export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
-
+    const intlRes = intlMiddleware(request)
     const authResponse = await auth0.middleware(request)
     const session = await auth0.getSession();
-    if (request.nextUrl.pathname.startsWith("/auth") || pathname.startsWith("/api")) {
-        return authResponse
-    }
-
     const locale = getLocaleFromPath(pathname, routing);
     const localePrefix = locale === routing.defaultLocale ? '/' : `/${locale}/`;
-    const intlRes = intlMiddleware(request)
-    for (const [key, value] of authResponse.headers) {
-        intlRes.headers.set(key, value)
-    }
-
     const isRoot = request.nextUrl.pathname === `/` || request.nextUrl.pathname === `/${locale}`;
     const isSharedPost = request.nextUrl.pathname.startsWith(`${localePrefix}shared-post`)
+
+    if (request.nextUrl.pathname.startsWith("/auth")) {
+        return authResponse
+    }
 
     if (isSharedPost) {
         return intlRes
@@ -47,8 +42,13 @@ export async function middleware(request: NextRequest) {
 
     if (!session) {
         if (!isRoot) {
-            return NextResponse.redirect(new URL(`/${locale}`, request.nextUrl.origin))
+            return NextResponse.redirect(new URL(`/`, request.nextUrl.origin))
         }
+    }
+
+    for (const [key, value] of authResponse.headers) {
+        if (key.toLowerCase() === 'set-cookie') continue;
+        intlRes.headers.set(key, value);
     }
 
     return intlRes
@@ -56,6 +56,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+        "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|api).*)",
     ],
 }
