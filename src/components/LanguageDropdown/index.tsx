@@ -5,6 +5,7 @@ import { Icons } from "@/assets/Icons";
 import { usePathname } from "@/i18n/navigation";
 import { useRouter } from "next/navigation";
 import Loading from "../Loading";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export default function LanguageDropdown({ }) {
     const { locales } = routing;
@@ -14,7 +15,7 @@ export default function LanguageDropdown({ }) {
     const pathname = usePathname()
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
-
+    const ref = useOutsideClick(() => setIsOpened(false));
     const changeLng = (item: string) => {
         setIsOpened(false)
         setLanguage(item)
@@ -24,8 +25,8 @@ export default function LanguageDropdown({ }) {
     }
     return (
         <>
-            <div className="col-start-1 col-end-3 row-start-1 row-end-2 justify-self-end">
-                <div className="relative">
+            <div className="col-start-1 col-end-3 row-start-1 row-end-2 justify-self-end" >
+                <div ref={ref} className="relative" >
                     {isPending ? <Loading /> :
                         <button className={`flex items-center cursor-pointer px-2 py-1 rounded-md`} onClick={() => setIsOpened(prev => !prev)}>
                             <span className="uppercase font-bold">

@@ -129,7 +129,7 @@ export default function PostsListItem({ selectedPostId, post, device, sharedPost
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                 </button>
                 {
-                    isMenuOpened && <div ref={ref} className="absolute top-full left-[70%] px-3 py-2 shadow-sm shadow-black/25 bg-[#F7F7F7] rounded-sm z-50 flex gap-3 flex-col">
+                    isMenuOpened && <div ref={ref} className="absolute top-full right-0 px-3 py-2 shadow-sm shadow-black/25 bg-[#F7F7F7] rounded-sm z-50 flex gap-3 flex-col">
                         <button onClick={() => {
                             if (device === "mobile") {
                                 setIsMobileOpen(false)
