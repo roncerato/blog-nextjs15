@@ -18,7 +18,7 @@ export default function Delete({ closeFunc, deleteFunc }: DeleteProps) {
 
             <div className="flex gap-2 w-full">
                 <button
-                    className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 rounded-full focus:outline-none font-bold text-base bg-red-600 hover:bg-red-700"
+                    className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 rounded-full focus:outline-none font-bold text-base bg-red-600 hover:bg-red-700 uppercase"
                     onClick={deleteFunc}>
                     {t("text")}
                 </button>

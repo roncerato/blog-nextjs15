@@ -37,7 +37,7 @@
                 "copied": "COPIED!"
             },
             "delete": {
-                "text": "DELETE",
+                "text": "Delete",
                 "title": "Are you sure?",
                 "desc": "This action is irreversible. Once deleted, you will not be able to recover this post.",
                 "option_none": "NONE"
