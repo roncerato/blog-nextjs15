@@ -98,6 +98,7 @@ const Toast: React.FC<ToastProps> = ({
         zIndex: 1000,
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         opacity: fade ? 1 : 0,
+        whiteSpace: "pre-line",
         transition: `opacity ${transitionDuration}ms ease, transform ${transitionDuration}ms ease`
     };
 
