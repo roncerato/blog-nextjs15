@@ -16,7 +16,7 @@
         "token_topup": {
             "title": "TOKEN PACKAGES",
             "desc": "Choose a token package that suits your needs",
-            "tokens": "{count, plural, one {# token} other {# tokens}}",
+            "tokens": "{count, plural, one { token} other { tokens}}",
             "one_time_purchase": "one-time purchase"
         },
         "cancel": {
