@@ -1,7 +1,13 @@
 export interface IPricingCardProps {
     priceId: string,
-    name: string,
     price: number,
     tokens: number,
-    desc: string,
+    name: {
+        ru: string;
+        en: string;
+    },
+    desc: {
+        ru: string;
+        en: string;
+    };
 }

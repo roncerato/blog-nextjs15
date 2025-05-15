@@ -22,6 +22,12 @@ export interface IDBPrice {
     tokens: number;
     priceId: string;
     price: number;
-    name: string;
-    description: string;
+    name: {
+        ru: string;
+        en: string;
+    },
+    description: {
+        ru: string;
+        en: string;
+    };
 }
