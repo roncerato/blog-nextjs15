@@ -9,6 +9,7 @@ import { SidebarHeader } from "../Sidebar/SidebarHeader";
 import SidebarMain from "../Sidebar/SidebarMain";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useTranslations } from "next-intl";
+import LanguageDropdown from "../LanguageDropdown";
 export default function MobileMenu() {
     const t = useTranslations('components.sidebar');
     const { isMobileOpen, setIsMobileOpen } = useMenuContext()
@@ -35,6 +36,7 @@ export default function MobileMenu() {
                 <div className={`col-start-1 col-end-3 row-start-1 row-end-2 justify-self-center ${!isMobileOpen ? "opacity-100" : "opacity-0"}`}>
                     <Icons.Logo className="w-20" />
                 </div>
+                <LanguageDropdown />
             </div>
             <aside ref={ref} className={`bg-[#F7F7F7] border-r-[1px] border-[#e5e7eb] overflow-hidden flex-1 ${isMobileOpen ? "max-w-[300px]" : "max-w-[0px]"} transition-all absolute top-0 left-0 w-full h-full z-50 md:hidden block`}>
                 <div className="flex flex-col h-full w-[300px] absolute">
