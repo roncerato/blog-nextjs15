@@ -1,9 +1,10 @@
 import PricingCard from "@/components/PricingCard"
 import clientPromise from "@/lib/mongodb";
 import { IDBPrice } from "@/types/db";
+import { getTranslations } from "next-intl/server";
 
 export default async function TokenTopup() {
-
+    const t = await getTranslations('pages.token_topup');
     const client = await clientPromise;
     const db = client.db("BlogStandart")
     const prices = await db.collection<IDBPrice>("prices").find().toArray();
@@ -12,10 +13,10 @@ export default async function TokenTopup() {
         <div className="h-full overflow-x-hidden grid content-center justify-center gap-8">
             <div className="p-4">
                 <h1 className="text-4xl font-bold text-center font-heading">
-                    TOKEN PACKAGES
+                    {t("title")}
                 </h1>
                 <p className="text-center text-[#4D4D4D]">
-                    Choose a token package that suits your needs
+                    {t("desc")}
                 </p>
             </div>
             <div className="flex flex-nowrap overflow-x-auto gap-4 pricing-cards-scrollbar p-4">
