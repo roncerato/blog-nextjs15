@@ -31,9 +31,23 @@ export async function middleware(request: NextRequest) {
     const localePrefix = locale === routing.defaultLocale ? '/' : `/${locale}/`;
     const isRoot = request.nextUrl.pathname === `/` || request.nextUrl.pathname === `/${locale}`;
     const isSharedPost = request.nextUrl.pathname.startsWith(`${localePrefix}shared-post`)
-
+    const isNewPostPage = request.nextUrl.pathname.startsWith(`${localePrefix}post/new`)
+    const isSuccessOrCancel = request.nextUrl.pathname.startsWith(`${localePrefix}success`) || request.nextUrl.pathname.startsWith(`${localePrefix}cancel`);
     if (request.nextUrl.pathname.startsWith("/auth")) {
         return authResponse
+    }
+
+    if (isSuccessOrCancel) {
+        const sessionID = request.nextUrl.searchParams.get("session_id");
+        if (!sessionID) {
+            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+        }
+
+        const res = await fetch(`${request.nextUrl.origin}/api/checkPayment?session_id=${sessionID}`);
+
+        if (res.status !== 200) {
+            return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+        }
     }
 
     if (isSharedPost) {
@@ -43,6 +57,29 @@ export async function middleware(request: NextRequest) {
     if (!session) {
         if (!isRoot) {
             return NextResponse.redirect(new URL(`/`, request.nextUrl.origin))
+        }
+    } else {
+
+        const res = await fetch(`${request.nextUrl.origin}/api/getTokens`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ session }),
+        });
+        const tokens = await res.json() as number | undefined;
+
+        if (isRoot) {
+            if (!tokens) {
+                return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
+            }
+            else {
+                return NextResponse.redirect(new URL("/post/new", request.nextUrl.origin));
+            }
+        }
+
+        if (isNewPostPage && !tokens) {
+            return NextResponse.redirect(new URL("/token-topup", request.nextUrl.origin));
         }
     }
 

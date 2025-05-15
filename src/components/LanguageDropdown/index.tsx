@@ -27,7 +27,11 @@ export default function LanguageDropdown({ }) {
         <>
             <div className="col-start-1 col-end-3 row-start-1 row-end-2 justify-self-end" >
                 <div ref={ref} className="relative" >
-                    {isPending ? <Loading /> :
+                    {isPending ?
+                        <div className="px-2 py-1">
+                            <Loading />
+                        </div>
+                        :
                         <button className={`flex items-center cursor-pointer px-2 py-1 rounded-md`} onClick={() => setIsOpened(prev => !prev)}>
                             <span className="uppercase font-bold">
                                 {language === "ru" ? "ру" : language}

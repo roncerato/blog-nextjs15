@@ -7,7 +7,12 @@ export const metadata: Metadata = {
   title: "Home"
 }
 
-export default async function Home() {
+export default async function Home({
+  params
+}: Readonly<{
+  params: Promise<{ locale: string }>;
+}>) {
+  const { locale } = await params;
   return (
     <main className="w-screen h-screen overflow-hidden flex justify-center items-center relative">
       <Image src={HeroImage} alt="Hero" fill className="absolute" />
@@ -15,7 +20,7 @@ export default async function Home() {
         <p>
           The AI-powered SAAS solution to generate SEO-optimized blog posts in minutes. Get high-quality content, without sacrificing your time.
         </p>
-        <a href="/auth/login" className="btn my-4">
+        <a href={`/auth/login?ui_locales=${locale}`} className="btn my-4">
           Begin
         </a>
       </div>
