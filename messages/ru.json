@@ -16,7 +16,7 @@
         "token_topup": {
             "title": "ПАКЕТЫ ТОКЕНОВ",
             "desc": "Выберите подходящий пакет — ничего лишнего, только то, что нужно",
-            "tokens": "{count, plural, one {# токен} few {# токена} many {# токенов} other {# токена}}",
+            "tokens": "{count, plural, one { токен} few { токена} many { токенов} other { токена}}",
             "one_time_purchase": "разовая покупка"
         },
         "cancel": {
